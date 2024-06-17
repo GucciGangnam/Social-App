@@ -2,7 +2,7 @@
 // Styles
 import "./Messages.css"
 // Components 
-import { NavigationBar } from "../components/navigation/NavigationBar"
+
 import { useState } from "react"
 
 
@@ -136,7 +136,7 @@ export const Messages = () => {
 
 
 
-            <NavigationBar page="messages" />
+
         </div>
     )
 }

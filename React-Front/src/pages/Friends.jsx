@@ -6,7 +6,6 @@ import { useState, useEffect } from "react"
 // RRD
 import { useNavigate } from "react-router-dom"
 // Components 
-import { NavigationBar } from "../components/navigation/NavigationBar"
 
 // COMPOENNT 
 export const Friends = () => {
@@ -124,7 +123,6 @@ export const Friends = () => {
 
 
 
-            <NavigationBar page="myprofile" />
 
         </div>
     )

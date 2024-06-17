@@ -1,65 +1,209 @@
 .NavigationBar {
-    background: linear-gradient(to top, var(--primary-fill) 50%, #f8cbad00 70%);
+    position: fixed;
+    bottom: 0px;
+    width: 100vw;
+    max-width: 800px;
+    height: 100%;
+    background-color: var(--primary-fill);
+    z-index: 100;
+    transition: 300ms ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 12;
+
+
+}
+
+.NavigationBar .content-container {
+    outline: 5px dashed pink;
+    height: calc(100% - 90px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: scroll;
+    gap: 10px;
+
+}
+
+.NavigationBar .Section {
+    outline: 1px dashed yellow;
+    width: calc(100% - 20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: var(--background);
+    position: relative;
+}
+
+/* Input section  */
+.NavigationBar .Section input {
+    padding: 10px;
+    border: none;
+    border-radius: 25px;
+    color: var(--primary-text);
+    font-size: 16px;
+    width: 90%;
+    background-color: var(--secondary-fill);
+}
+
+.NavigationBar .Section input:focus {
+    outline: 2px solid var(--background);
+}
+
+/* Camera Section */
+.NavigationBar .Camera-container {
+    height: 100px;
+    width: 100px;
+    background-color: var(--secondary-fill);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Buttons */
+.NavigationBar button {
+    width: 100px;
+    aspect-ratio: 1/1;
+    border: none;
+    background-color: var(--secondary-fill);
+    border-radius: 10px;
+}
+
+.NavigationBar .Info-btn{ 
+    position: absolute;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ////////// / / / / / / / / / / / / /  */
+
+/* NAV BAR */
+.NavBar {
+    background: linear-gradient(to top, var(--primary-fill) 70%, rgba(255, 255, 255, 0) 100%);
+    width: 100vw;
+    max-width: 800px;
+    height: 100px;
+    position: absolute;
+    bottom: 0px;
+    border: none;
+
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    padding-top: 20px;
-
-    position: fixed;
-    width: 100%;
-    max-width:800px;
-    bottom: 0px;
-
 }
 
-/* ICONS */
 
-/* home icon */
-.NavigationBar .Home-svg {
-    cursor: pointer;
-    width: 50px;
-    fill: none;
-    stroke: var(--icon-deselected)
+/* ICONS  */
+
+/* Home Icon */
+.NavBar .Home-svg {
+    stroke: var(--icon-deselected);
+    z-index: 0;
+    transition: 300ms ease-in-out;
 }
-.NavigationBar .Home-svg-selected {
-    cursor: pointer;
-    width: 50px;
-    fill: none;
-    stroke: var(--icon-selected)
-}
-.NavigationBar .Home-svg path {
-    stroke: inherit;
-}
-.NavigationBar .Home-svg-selected path {
+
+.NavBar .Home-svg path {
     stroke: inherit;
 }
 
-/* add icon */
-.NavigationBar .Add-svg {
-    cursor: pointer;
-    width: 100px;
-    
-}
-.NavigationBar .Add-svg .Circle {
-    /* fill: var(--primary-fill) */
-    transition: 500ms
-}
-.NavigationBar .Add-svg-selected {
-    cursor: pointer;
-    width: 100px;
-}
-.NavigationBar .Add-svg-selected .Circle {
-    fill: var(--secondary-fill)
+.NavBar .Home-svg-selected {
+    stroke: var(--icon-selected);
+    transition: 300ms ease-in-out;
 }
 
-/* msg icon  */
-.NavigationBar .Msg-svg {
-    cursor: pointer;
-    width: 50px;
+.NavBar .Home-svg-selected path {
+    stroke: inherit;
+}
+
+
+/* Messages Icon */
+.NavBar .Message-svg {
+    /* stroke: var(--icon-deselected); */
     fill: var(--icon-deselected);
+    transition: 300ms ease-in-out;
 }
-.NavigationBar .Msg-svg-selected {
-    cursor: pointer;
-    width: 50px;
-    fill: var(--icon-selected);
+
+.NavBar .Message-svg path {
+    stroke: inherit;
+    fill: inherit;
+}
+
+.NavBar .Message-svg-selected {
+    /* stroke: var(--icon-deselected); */
+    fill: var(--icon-deselected);
+    transition: 300ms ease-in-out;
+}
+
+.NavBar .Message-svg-selected path {
+    stroke: inherit;
+    fill: inherit;
+}
+
+/* Create Icon */
+
+/* Target the first path */
+.Create-svg g g path:nth-child(1) {
+    fill: var(--primary-fill)
+        /* Example style */
+}
+
+/* Target the second path */
+.Create-svg g g path:nth-child(2) {
+    fill: var(--background);
+    /* Example style */
+}
+
+/* Target the third path */
+.Create-svg g g path:nth-child(3) {
+    fill: var(--background);
+    /* Example style */
+}
+
+
+/* / / / / / / // / / / / / / / / / / / /  / / */
+
+/* INFO OVERLAY  */
+
+.NavigationBar .Info-overlay{ 
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.50);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.NavigationBar .Info-popup{ 
+    background-color: var(--secondary-fill);
+    width: 90%;
+    height: fit-content;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    color: var(--secondary-text);
+
 }

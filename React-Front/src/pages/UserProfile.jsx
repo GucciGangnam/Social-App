@@ -2,7 +2,7 @@
 // Styles 
 import "./UserProfile.css"
 // Compoennt 
-import { NavigationBar } from "../components/navigation/NavigationBar"
+
 
 // COMPONEnt
 export const UserProfile = () => {
@@ -83,7 +83,7 @@ export const UserProfile = () => {
                     Onlyfans
                 </div>
             </div>
-            <NavigationBar page="myprofile" />
+
 
         </div>
 

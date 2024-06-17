@@ -1,9 +1,9 @@
 // IMPORTS 
 // Styles 
-import { NavigationBar } from "../components/navigation/NavigationBar"
 import "./MyProfile.css"
 // RRD 
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+
 // Components 
 
 
@@ -199,7 +199,7 @@ export const MyProfile = () => {
 
 
 
-            <NavigationBar page="myprofile" />
+
 
         </div>
     )

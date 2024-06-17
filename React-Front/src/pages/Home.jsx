@@ -6,7 +6,8 @@ import { useState, useEffect } from "react";
 // RRD 
 import { useNavigate } from "react-router-dom";
 // Components
-import { NavigationBar } from "../components/navigation/NavigationBar"
+
+import { Event } from "../components/home/Event";
 
 
 
@@ -89,7 +90,20 @@ export const Home = () => {
             <div className="Event-container">
 
 
-                Event go here!
+            <Event/>
+            <Event/>
+            <Event/>
+            <Event/>
+            <Event/>
+            <Event/>
+            <Event/>
+            <Event/>
+            <Event/>
+            <Event/>            
+            <Event/>
+            <Event/>
+            <Event/>
+            <Event/>
 
 
 
@@ -100,12 +114,24 @@ export const Home = () => {
             </div>
 
             <div className="Event-container">
-                Event go here!
+            <Event/>
+            <Event/>
+            <Event/>
+            <Event/>
+            <Event/>
+            <Event/>
+            <Event/>
+            <Event/>
+            <Event/>
+            <Event/>            
+            <Event/>
+            <Event/>
+            <Event/>
+            <Event/>
             </div>
 
 
-            {/* Navigation bar - Absolute overlay */}
-            <NavigationBar page="home" />
+
         </div>
     )
 }

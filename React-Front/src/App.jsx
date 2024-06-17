@@ -3,12 +3,14 @@
 import { useState, useEffect } from 'react'
 // RRD
 import { Route, Routes } from 'react-router-dom'
+// Compoents 
+import { NavigationBar } from './components/navigation/NavigationBar'
 
 // Styles
 import './App.css'
 
 // Components
-import { NavigationBar } from './components/navigation/NavigationBar'
+
 
 // Pages
 import { ErrorPage } from './pages/ErrorPage'
@@ -23,7 +25,10 @@ import { UserProfile } from './pages/UserProfile'
 
 function App() {
 
-  
+  const [isCreateNewEventShowing, setIsCreateNewEventShowing] = useState(false)
+
+
+
 
 
   // DARK MODE //
@@ -48,7 +53,6 @@ function App() {
 
 
 
-      {/* <NavigationBar/> */}
 
 
       <Routes>
@@ -56,11 +60,12 @@ function App() {
         <Route path='/home' element={<Home />} />
         <Route path='/myprofile' element={<MyProfile />} />
         <Route path='/myprofile/frinds' element={<Friends />} />
-        <Route path='/messages' element={<Messages/>} />
-        <Route path='/user/*' element={<UserProfile/>} />
+        <Route path='/messages' element={<Messages />} />
+        <Route path='/user/*' element={<UserProfile />} />
         <Route path="*" element={<ErrorPage />} />
-
       </Routes>
+
+      <NavigationBar isCreateNewEventShowing={isCreateNewEventShowing} setIsCreateNewEventShowing={setIsCreateNewEventShowing} />
 
     </div>
   )
