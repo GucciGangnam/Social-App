@@ -1,0 +1,165 @@
+.Messages {
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+.Messages .Header {
+    /* outline: 1px dashed pink; */
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    color: var(--primary-fill);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 30px;
+}
+
+.Messages .Search {
+    background-color: var(--secondary-fill);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: max-height 300ms ease-in-out, padding 300ms ease-in-out;
+    max-height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.Messages .Search input {
+    padding: 10px;
+    width: 80%;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+}
+
+.Messages .Search input:focus {
+    outline: 2px solid var(--primary-fill);
+}
+
+/* New styles for showing the search bar */
+.Messages .Search.show {
+    max-height: 200px; /* Adjust based on your design */
+    padding: 10px;    /* Restore the padding when shown */
+}
+
+/* Styles for the results container */
+.Messages .Search .Results {
+    width: 100%;
+    background-color: var(--secondary-fill);
+    max-height: 150px; /* Adjust based on your design */
+    overflow-y: auto;
+    transition: max-height 300ms ease-in-out;
+    margin-top: 10px; /* Added space between input and results */
+}
+
+.Messages .Search .Results.hidden {
+    max-height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.Messages .Search .Results.show {
+    max-height: 150px; /* Adjust based on your design */
+    padding: 10px;
+}
+
+/* Styles for individual result items */
+.Messages .Search .Results div {
+    padding: 10px;
+    border: 1px solid var(--primary-fill);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: var(--background);
+    transition: background-color 200ms ease-in-out;
+}
+
+.Messages .Search .Results div:hover {
+    background-color: var(--primary-fill); /* Change on hover */
+    color: #fff; /* Change text color on hover */
+}
+
+
+
+
+
+
+
+
+
+
+.Messages .Message-type-seperator {
+    background-color: var(--background);
+    padding: 10px;
+    position: sticky;
+    top: 0px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    /* Subtle box shadow */
+    text-align: center;
+    color: var(--primary-fill);
+    font-weight: bold;
+}
+
+.Messages .Convo-container {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* GROUP CONVO DIV  */
+.Messages .Group-Convo {
+    background-color: var(--element-background);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+}
+
+.Messages .Notification {
+    background-color: red;
+    width: 10px;
+    height: 10px;
+    padding: 1px;
+    border-radius: 50%;
+    position: absolute;
+    right: 20px;
+    top: 14px;
+    color: white;
+    text-align: center;
+}
+
+/* SOLO CONVOS */
+.Messages .Solo-Convo {
+    background-color: var(--element-background);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+}
+
+.Messages .Solo-Convo {
+    background-color: var(--element-background);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+}
+
+.Messages .Solo-Convo svg {
+
+    width: 15px;
+    height: 15px;
+    padding: 1px;
+    border-radius: 50%;
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    color: white;
+    text-align: center;
+}

@@ -1,0 +1,7 @@
+body{ 
+  margin: 0px;
+  padding-bottom: env(safe-area-inset-bottom);
+  background-color: var(--background);
+  display: flex;
+  justify-content: center;
+}

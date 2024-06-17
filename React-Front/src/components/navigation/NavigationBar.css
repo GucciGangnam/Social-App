@@ -1,0 +1,65 @@
+.NavigationBar {
+    background: linear-gradient(to top, var(--primary-fill) 50%, #f8cbad00 70%);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-top: 20px;
+
+    position: fixed;
+    width: 100%;
+    max-width:800px;
+    bottom: 0px;
+
+}
+
+/* ICONS */
+
+/* home icon */
+.NavigationBar .Home-svg {
+    cursor: pointer;
+    width: 50px;
+    fill: none;
+    stroke: var(--icon-deselected)
+}
+.NavigationBar .Home-svg-selected {
+    cursor: pointer;
+    width: 50px;
+    fill: none;
+    stroke: var(--icon-selected)
+}
+.NavigationBar .Home-svg path {
+    stroke: inherit;
+}
+.NavigationBar .Home-svg-selected path {
+    stroke: inherit;
+}
+
+/* add icon */
+.NavigationBar .Add-svg {
+    cursor: pointer;
+    width: 100px;
+    
+}
+.NavigationBar .Add-svg .Circle {
+    /* fill: var(--primary-fill) */
+    transition: 500ms
+}
+.NavigationBar .Add-svg-selected {
+    cursor: pointer;
+    width: 100px;
+}
+.NavigationBar .Add-svg-selected .Circle {
+    fill: var(--secondary-fill)
+}
+
+/* msg icon  */
+.NavigationBar .Msg-svg {
+    cursor: pointer;
+    width: 50px;
+    fill: var(--icon-deselected);
+}
+.NavigationBar .Msg-svg-selected {
+    cursor: pointer;
+    width: 50px;
+    fill: var(--icon-selected);
+}

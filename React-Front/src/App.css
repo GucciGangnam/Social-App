@@ -1,1 +1,52 @@
+:root {
+  --background: #ffffff;
+  --primary-fill: #F8CBAD;
+  --secondary-fill: #FBE5D6;
+  --element-background: #F2F2F2;
 
+  --primary-text: #000000;
+  --secondary-text: #A6A6A6;
+
+  --icon-selected: #000000;
+  --icon-deselected: #A6A6A6;
+
+  --red1: #FF8F8D;
+  --orange1: #F8CBAD;
+  --yellow1: #FFE699;
+  --green1: #C5E0B4;
+  --blue1: #B4C7E7;
+  --purple1: #CE91FF;
+  --pink1: #FFBEF9;
+}
+
+[data-theme='dark'] {
+  --background: #969696;
+  --primary-fill: #F8CBAD;
+  --secondary-fill: #FBE5D6;
+  --element-background: #F2F2F2;
+
+  --primary-text: #000000;
+  --secondary-text: #A6A6A6;
+
+  --red1: #FF8F8D;
+  --orange1: #F8CBAD;
+  --yellow1: #FFE699;
+  --green1: #C5E0B4;
+  --blue1: #B4C7E7;
+  --purple1: #CE91FF;
+  --pink1: #FFBEF9;
+}
+
+.App{ 
+
+  outline: 2px solid purple;
+  font-family: sans-serif;
+  width: 100vw;
+  max-width: 800px;
+
+  min-height: 100vh;
+  background-color: var(--background);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  box-shadow: -10px 0 20px -10px rgba(0, 0, 0, 0.2), 10px 0 20px -10px rgba(0, 0, 0, 0.2);
+}

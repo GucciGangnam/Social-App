@@ -1,0 +1,243 @@
+.SignupLogin {
+    padding: 10vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+
+}
+
+.SignupLogin button {
+    background-color: var(--secondary-fill);
+    border: none;
+    outline: 2px solid var(--primary-fill);
+    border-radius: 25px;
+    padding: 10px;
+    color: var(--primary-text);
+    width: 100%;
+    max-width: 400px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.SignupLogin form { 
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+.SignupLogin button:hover {
+    background-color: var(--primary-fill);
+    outline: 2px solid var(--secondary-fill);
+}
+
+.SignupLogin button img {
+    max-width: 30px;
+    max-height: 30px;
+}
+
+.SignupLogin .SignupBTN {
+    background-color: var(--primary-fill);
+    width: fit-content;
+}
+
+@keyframes loading {
+    0% {
+        background-color: var(--primary-fill);
+        outline: 2px solid var(--secondary-fill);
+    }
+
+    50% {
+        background-color: var(--secondary-fill);
+        outline: 2px solid var(--primary-fill);
+    }
+
+    100% {
+        background-color: var(--primary-fill);
+        outline: 2px solid var(--secondary-fill);
+    }
+}
+
+.SignupLogin .SignupBTN-loading {
+    animation: loading 1s infinite;
+    width: fit-content;
+}
+
+.SignupLogin .BackBtn {
+    background-color: inherit;
+    border: 2px solid var(--secondary-fill);
+    width: fit-content;
+
+}
+
+.SignupLogin input {
+    border: 2px solid var(--secondary-fill);
+    border-radius: 25px;
+    padding: 10px;
+    color: var(--primary-text);
+    width: calc(100% - 20px);
+    max-width: 400px;
+    min-height: 30px;
+    font-size: 16px;
+
+}
+
+.SignupLogin input:focus {
+    outline: 2px solid var(--primary-fill);
+}
+
+.SignupLogin .Main {
+    background-color: var(--primary-fill);
+    outline: 2px solid var(--secondary-fill);
+}
+
+.SignupLogin .Main:hover {
+    background-color: var(--secondary-fill);
+    outline: 2px solid var(--primary-fill);
+}
+
+/* Sign up options  */
+
+.SignupOptions {
+    /* outline: 3px dashed green; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+
+/* Sign up email  */
+.SignupEmail {
+    /* outline: 3px dashed green; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Sign up meta  */
+.SignupMeta {
+    /* outline: 3px dashed green; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Sign up apple  */
+.SignupApple {
+    /* outline: 3px dashed green; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Sign up google  */
+.SignupGoogle {
+    /* outline: 3px dashed green; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Sign up x  */
+.SignupX {
+    /* outline: 3px dashed green; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ////// */
+
+/* Log in Options */
+.LoginOptions {
+    /* outline: 3px dashed green; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+
+/* Sign up email  */
+.LoginEmail {
+    /* outline: 3px dashed green; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Sign up meta  */
+.LoginMeta {
+    /* outline: 3px dashed green; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Sign up apple  */
+.LoginApple {
+    /* outline: 3px dashed green; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Sign up google  */
+.LoginGoogle {
+    /* outline: 3px dashed green; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Sign up x  */
+.LoginX {
+    /* outline: 3px dashed green; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}

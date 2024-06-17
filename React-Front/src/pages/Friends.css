@@ -1,0 +1,123 @@
+.Friends{ 
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;    
+}
+
+.Friends .Header{ 
+    /* outline: 1px dashed pink; */
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    color: var(--primary-fill);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 30px;
+}
+
+/* SEARCH  */
+.Friends .Search {
+    background-color: var(--secondary-fill);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: max-height 300ms ease-in-out, padding 300ms ease-in-out;
+    max-height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.Friends .Search input {
+    padding: 10px;
+    width: 80%;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+}
+
+.Friends .Search input:focus {
+    outline: 2px solid var(--primary-fill);
+}
+
+/* New styles for showing the search bar */
+.Friends .Search.show {
+    max-height: 200px; /* Adjust based on your design */
+    padding: 10px;    /* Restore the padding when shown */
+}
+
+/* Styles for the results container */
+.Friends .Search .Results {
+    width: 100%;
+    background-color: var(--secondary-fill);
+    max-height: 150px; /* Adjust based on your design */
+    overflow-y: auto;
+    transition: max-height 300ms ease-in-out;
+    margin-top: 10px; /* Added space between input and results */
+}
+
+.Friends .Search .Results.hidden {
+    max-height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.Friends .Search .Results.show {
+    max-height: 150px; /* Adjust based on your design */
+    padding: 10px;
+}
+
+/* Styles for individual result items */
+.Friends .Search .Results div {
+    padding: 10px;
+    border: 1px solid var(--primary-fill);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: var(--background);
+    transition: background-color 200ms ease-in-out;
+}
+
+.Friends .Search .Results div:hover {
+    background-color: var(--primary-fill); /* Change on hover */
+    color: #fff; /* Change text color on hover */
+}
+
+.Friends .Section-seperator{
+    background-color: var(--background);
+    padding: 10px;
+    position: sticky;
+    top: 0px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    /* Subtle box shadow */
+    text-align: center;
+    color: var(--primary-fill);
+    font-weight: bold;
+}
+.Friends .Friend-container{
+    height: 150px;
+    background-color: var(--background);
+    padding: 10px;
+}
+.Friends .Contact{ 
+    background-color: var(--element-background);
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.Friends .Circle-SVG{ 
+
+    width: 15px;
+    height: 15px;
+    padding: 1px;
+    border-radius: 50%;
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    color: white;
+    text-align: center;
+}
