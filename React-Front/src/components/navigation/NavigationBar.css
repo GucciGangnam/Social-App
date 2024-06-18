@@ -28,7 +28,7 @@
 }
 
 .NavigationBar .Section {
-    outline: 1px dashed yellow;
+    /* outline: 1px dashed yellow; */
     width: calc(100% - 20px);
     display: flex;
     flex-direction: column;
@@ -37,6 +37,21 @@
     gap: 10px;
     color: var(--background);
     position: relative;
+}
+
+.NavigationBar .Button-holder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.NavigationBar .Section-buttons {
+    width: 90%;
+    /* outline: 1px dashed pink; */
+    display: flex;
+    justify-content: space-around;
 }
 
 /* Input section  */
@@ -48,6 +63,7 @@
     font-size: 16px;
     width: 90%;
     background-color: var(--secondary-fill);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.2);
 }
 
 .NavigationBar .Section input:focus {
@@ -63,6 +79,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* Buttons */
@@ -72,16 +89,23 @@
     border: none;
     background-color: var(--secondary-fill);
     border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.2);
 }
 
-.NavigationBar .Info-btn{ 
-    position: absolute;
-    right: 20px;
+.NavigationBar .Info-btn {
     width: 20px;
     height: 20px;
 }
 
+/* DATE TIME SLEECTOR DIV  */
+.NavigationBar .Datetime-selector input {
+    outline: 2px solid var(--red1);
+    background-color: var(--secondary-fill);
+    color: var(--primary-text);
 
+}
+
+.NavigationBar .DatePicker {}
 
 
 
@@ -121,6 +145,9 @@
     transition: 300ms ease-in-out;
 }
 
+
+
+
 .NavBar .Home-svg path {
     stroke: inherit;
 }
@@ -152,6 +179,10 @@
     fill: var(--icon-deselected);
     transition: 300ms ease-in-out;
 }
+.NavBar .Message-svg-selected:focus{ 
+    outline: none;
+    box-shadow: none;
+}
 
 .NavBar .Message-svg-selected path {
     stroke: inherit;
@@ -161,6 +192,7 @@
 /* Create Icon */
 
 /* Target the first path */
+
 .Create-svg g g path:nth-child(1) {
     fill: var(--primary-fill)
         /* Example style */
@@ -183,7 +215,7 @@
 
 /* INFO OVERLAY  */
 
-.NavigationBar .Info-overlay{ 
+.NavigationBar .Info-overlay {
     position: fixed;
     top: 0px;
     left: 0px;
@@ -196,7 +228,7 @@
     align-items: center;
 }
 
-.NavigationBar .Info-popup{ 
+.NavigationBar .Info-popup {
     background-color: var(--secondary-fill);
     width: 90%;
     height: fit-content;
@@ -206,4 +238,11 @@
     flex-direction: column;
     color: var(--secondary-text);
 
+}
+
+.NavigationBar .Submit-button {
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

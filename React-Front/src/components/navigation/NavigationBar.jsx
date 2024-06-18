@@ -3,6 +3,7 @@
 import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom";
 import "./NavigationBar.css"
+import DateTimePicker from 'react-datetime-picker';
 
 // COMPONENT 
 
@@ -17,8 +18,10 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
     const [title, setTitle] = useState('');
     const [info, setInfo] = useState('');
     const [img, setImg] = useState(null);
-    const [privacyPreference, setPrivacyPreference] = useState("Circle only")
-    const [selectedCircle, setSelectedCircle] = useState("All Friends")
+    const [selectedDate, setSelectedDate] = useState(null); // State to store selected date and time
+
+    const [privacyPreference, setPrivacyPreference] = useState("Friends only")
+    // const [selectedCircle, setSelectedCircle] = useState("All Friends")
 
     // POST EVEN BTN HANDLER
     const postEvent = () => {
@@ -26,19 +29,19 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
         console.log(info)
         console.log(img)
         console.log(privacyPreference)
-        console.log(selectedCircle)
+        // console.log(selectedCircle)
     }
 
     // Handle Privacy Button Toggle
     const handlePrivacyBTNClick = () => {
-        if (privacyPreference === 'Circle only') {
+        if (privacyPreference === 'Friends only') {
             setPrivacyPreference('Friends of friends')
         }
         if (privacyPreference === 'Friends of friends') {
             setPrivacyPreference('Anyone')
         }
         if (privacyPreference === 'Anyone') {
-            setPrivacyPreference('Circle only')
+            setPrivacyPreference('Friends only')
         }
     }
 
@@ -72,8 +75,18 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
     const privacyInfoBTN = () => {
         setIsPrivacyInfoShowing(previous => !previous);
     }
-    const cirlceInfoBTN = () => {
-        setIsCircleInfoShowing(previous => !previous);
+    // const cirlceInfoBTN = () => {
+    //     setIsCircleInfoShowing(previous => !previous);
+    // }
+
+    // Handle Toggle date tim sleector 
+    const [dateTime, setDateTime] = useState('Now')
+    const handleToggleDateTime = () => {
+        if (dateTime === "Now") {
+            setDateTime('Later')
+        } else {
+            setDateTime("Now")
+        }
     }
 
     return (
@@ -135,38 +148,78 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                     />
                 </div>
 
-                <div className="Section">
-                    <button
-                        onClick={handlePrivacyBTNClick}
-                        style={{
-                            backgroundColor: privacyPreference === "Circle only"
-                                ? "var(--green1)"
-                                : privacyPreference === "Friends of friends"
-                                    ? "var(--blue1)"
-                                    : privacyPreference === "Anyone"
-                                        ? "var(--red1)"
-                                        : "defaultColor"
-                        }}
-                    >
-                        {privacyPreference}
-                    </button>
-                    <button
-                        onClick={privacyInfoBTN}
-                        className="Info-btn">i</button>
+                <div className="Section-buttons">
+
+                    <div className="Button-holder">
+                        <button
+                            onClick={handlePrivacyBTNClick}
+                            style={{
+                                backgroundColor: privacyPreference === "Friends only"
+                                    ? "var(--green1)"
+                                    : privacyPreference === "Friends of friends"
+                                        ? "var(--blue1)"
+                                        : privacyPreference === "Anyone"
+                                            ? "var(--red1)"
+                                            : "defaultColor"
+                            }}
+                        >
+                            {privacyPreference}
+                        </button>
+                        <button
+                            onClick={privacyInfoBTN}
+                            className="Info-btn">i</button>
+                    </div>
+
+                    <div className="Button-holder">
+                        <button
+                            style={{
+                                background: dateTime === "Now" ? "var(--primary-fill)" : "var(--secondary-fill)"
+                            }}
+                            onClick={handleToggleDateTime}>
+                            {dateTime}
+                        </button>
+                        {dateTime === "Later" && (
+                            <div className="Datetime-selector">
+                                <input className="DatePicker" type="datetime-local" placeholder="Enter Date and Time"></input>
+                            </div>
+                        )}
+                    </div>
+
                 </div>
 
-                {privacyPreference !== 'Anyone' && (
+                <button
+                    className="Submit-button"
+                    onClick={postEvent}>
+                    <svg
+                        width="80px"
+                        height="80px"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M13 15L16 12M16 12L13 9M16 12H8M7.2 20H16.8C17.9201 20 18.4802 20 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V7.2C20 6.0799 20 5.51984 19.782 5.09202C19.5903 4.71569 19.2843 4.40973 18.908 4.21799C18.4802 4 17.9201 4 16.8 4H7.2C6.0799 4 5.51984 4 5.09202 4.21799C4.71569 4.40973 4.40973 4.71569 4.21799 5.09202C4 5.51984 4 6.07989 4 7.2V16.8C4 17.9201 4 18.4802 4.21799 18.908C4.40973 19.2843 4.71569 19.5903 5.09202 19.782C5.51984 20 6.07989 20 7.2 20Z"
+                            stroke="var(--primary-fill)"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round" />
+                    </svg>
+                </button>
+
+                {/* {privacyPreference !== 'Anyone' && (
                     <div className="Section">
                         <button>Circle btn</button>
                         <button
                             onClick={cirlceInfoBTN}
                             className="Info-btn">i</button>
                     </div>
-                )}
+                )} */}
 
                 <div className="Section">
-                    <button
-                        onClick={postEvent}>Post btn</button>
+
+                </div>
+
+                <div className="Section">
+
                 </div>
 
             </div>
@@ -260,23 +313,23 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                     {isPrivacyInfoShowing && (
                         <div className="Info-popup">
                             <strong
-                            style={{
-                                color: "var(--red1)"
-                            }}>Anyone</strong>
+                                style={{
+                                    color: "var(--red1)"
+                                }}>Anyone</strong>
                             Anyone within a certain distance of you will be able to see this event regardless of wheather you are connected to them.
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
                             <strong
-                            style={{
-                                color: "var(--blue1)"
-                            }}>Friends of friends</strong>
+                                style={{
+                                    color: "var(--blue1)"
+                                }}>Friends of friends</strong>
                             Once a friend joins your group, their friends will also be able to see this event.
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
                             <strong
-                            style={{
-                                color: "var(--green1)"
-                            }}>Circle only</strong>
+                                style={{
+                                    color: "var(--green1)"
+                                }}>Circle only</strong>
                             Only the people in your selected circle will be able to see this event.
                         </div>
                     )}
@@ -284,16 +337,16 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                     {isCircleInfoShowing && (
                         <div className="Info-popup">
                             <strong
-                            style={{
-                                color: "var(--blue1)"
-                            }}>Friends of friends</strong>
+                                style={{
+                                    color: "var(--blue1)"
+                                }}>Friends of friends</strong>
                             Once a friend joins your group, their friends will also be able to see this event.
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
                             <strong
-                            style={{
-                                color: "var(--green1)"
-                            }}>Circle only</strong>
+                                style={{
+                                    color: "var(--green1)"
+                                }}>Circle only</strong>
                             Only the people in your selected circle will be able to see this event.
                         </div>
                     )}
