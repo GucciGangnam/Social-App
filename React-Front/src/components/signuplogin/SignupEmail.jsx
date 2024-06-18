@@ -3,6 +3,8 @@
 import { useState } from "react"
 // Styles 
 import "../../pages/SignupLogin.css"
+// variables 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 // COMPONENTS 
 
@@ -35,11 +37,28 @@ export const SignupEmail = ({ setFormSelector }) => {
         setFormSelector('SignupOptions')
     }
     // Sign Up btn
+    // Function to check password strength //
+    function isValidPassword(password) {
+        // Password must be at least 8 characters long and contain at least 1 letter and 1 number //
+        const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        return regex.test(password);
+    }
+
     const [isSigningUp, setIsSigningUp] = useState(false)
-    const handleSignup = (e) => {
+    const handleSignup = async(e) => {
         e.preventDefault();
+        // Check if password meets strength requirements //
+        if (!isValidPassword(formData.password)) {
+            setConfirmPasswordPH('At least 8 charachers, 1 letter and 1 number');
+            setFormData(prevState => ({
+                ...prevState,
+                password: '',
+                confirmPassword: ''
+            }));
+            return;
+        }
         // Check if passwords match //
-        if (formData.password !== formData.confirmPassword) { 
+        if (formData.password !== formData.confirmPassword) {
             setConfirmPasswordPH('Passwords do not match')
             setFormData(prevState => ({
                 ...prevState,
@@ -48,7 +67,28 @@ export const SignupEmail = ({ setFormSelector }) => {
             return;
         }
         setIsSigningUp(true)
-        // Make teh fetch //
+        // Make the fetch //
+        try {
+            const response = await fetch(`${backendUrl}/users`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            if (response.ok) {
+                console.log("front end got a good response");
+            }
+
+        } catch (error) {
+            console.error('Error:', error.message);
+            // Handle errors as needed
+        }
     }
     return (
         <div className="SignupEmail">
