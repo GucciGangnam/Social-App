@@ -3,6 +3,8 @@
 import { useState } from "react"
 // Styles 
 import "../../pages/SignupLogin.css"
+// variables 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 // COMPONENTS 
 
@@ -23,6 +25,9 @@ export const LoginEmail = ({ setFormSelector }) => {
         }));
     };
 
+    // Placeholder states
+    const [passwordPH, setPasswordPH] = useState('Password');
+
 
     // Button handlers 
     const handleBackButton = () => {
@@ -30,9 +35,43 @@ export const LoginEmail = ({ setFormSelector }) => {
     }
 
     const [isLoggingIn, setIsLoggingIn] = useState(false)
-    const handleLogin = (e) => {
+    const handleLogin = async(e) => {
         e.preventDefault();
         setIsLoggingIn(true)
+        // Make fetch
+        try {
+            const response = await fetch(`${backendUrl}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                setFormData({
+                    ...formData,
+                    password: ''
+                });
+                setPasswordPH("Email / password don't match");
+                setIsLoggingIn(false);
+            }
+
+            if (response.ok) {
+                localStorage.setItem('accessToken', data.accessToken);
+                setIsLoggingIn(false);
+                
+            }
+
+        } catch (error) {
+            console.error('Error:', error.message);
+            // Handle errors as needed
+        }
+
+
+
 
     }
 
@@ -47,7 +86,7 @@ export const LoginEmail = ({ setFormSelector }) => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="Email"
+                    placeholder='Email'
                     required
                 />
                 <input
@@ -55,7 +94,7 @@ export const LoginEmail = ({ setFormSelector }) => {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    placeholder="Password"
+                    placeholder={passwordPH}
                     required
                 />
 

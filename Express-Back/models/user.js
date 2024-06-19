@@ -26,47 +26,51 @@ const usersSchema = new Schema({
         },
         SOCIAL_LINKS: {
             type: Array,
-            required: false,
+            default: [],
         },
         BIO: {
             type: String,
-            required: true,
+            default: "Hi, welcome to my profile",
+        },
+        AVATAR: {
+            type: String,
+            default: null,
         },
     },
     MAIN_DATA: {
+        CIRCLES: {
+            type: Array,
+            default: [],
+        },
         CONTACTS: {
             type: Array,
-            required: false,
+            default: [],
         },
         HOSTING_EVENTS: {
             type: [String],
-            required: false,
+            default: [],
         },
         ATTENDING_EVENTS: {
             type: [String],
-            required: false,
-        },
-        CIRCLES: {
-            type: Array,
-            required: false,
+            default: [],
         },
         CHATS: {
             type: Array,
-            required: false,
+            default: [],
         },
     },
     META_DATA: {
         IP_ADDRESSES: {
             type: Array,
-            required: false,
+            default: [],
         },
         CURRENT_LOCATION: {
             type: String,
-            required: false,
+            default: null,
         },
         SIGNUP_DATE: {
-            type: String,
-            required: false,
+            type: Date,
+            default: Date.now,
         }
     }
 }, { collection: 'Users' }); // Specify the collection name here

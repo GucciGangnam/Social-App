@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 // RRD 
 import { useNavigate } from "react-router-dom";
 // Components
-
+import { EventLoading } from "../components/home/EventLoading";
 import { Event } from "../components/home/Event";
 
 
@@ -14,7 +14,20 @@ import { Event } from "../components/home/Event";
 
 // COMPONENT 
 export const Home = () => {
-    const naviagte = useNavigate();
+    const navigate = useNavigate();
+    // ON PAGE LOAD
+    // START
+    // Set page loading
+    const [pageLoading, setPageLoading] = useState(true);
+
+    // fetch data. if JWT auth fails, redirect to login
+
+
+
+
+    useEffect(() => {
+        // get users home data
+    }, [])
 
 
     // Determin scrollign and set state for mangaing state of Header
@@ -45,7 +58,7 @@ export const Home = () => {
 
     // Button handlers 
     const handleMyProfileClick = () => {
-        naviagte("/myprofile")
+        navigate("/myprofile")
     }
 
 
@@ -89,23 +102,14 @@ export const Home = () => {
 
             <div className="Event-container">
 
-
-            <Event/>
-            <Event/>
-            <Event/>
-            <Event/>
-            <Event/>
-            <Event/>
-            <Event/>
-            <Event/>
-            <Event/>
-            <Event/>            
-            <Event/>
-            <Event/>
-            <Event/>
-            <Event/>
-
-
+                {pageLoading && (
+                    <>
+                    <EventLoading />
+                    <EventLoading />
+                    <EventLoading />
+                    <EventLoading />
+                    </>
+                )}
 
             </div>
 
@@ -114,20 +118,16 @@ export const Home = () => {
             </div>
 
             <div className="Event-container">
-            <Event/>
-            <Event/>
-            <Event/>
-            <Event/>
-            <Event/>
-            <Event/>
-            <Event/>
-            <Event/>
-            <Event/>
-            <Event/>            
-            <Event/>
-            <Event/>
-            <Event/>
-            <Event/>
+
+            {pageLoading && (
+                    <>
+                    <EventLoading />
+                    <EventLoading />
+                    <EventLoading />
+                    <EventLoading />
+                    </>
+                )}
+                
             </div>
 
 

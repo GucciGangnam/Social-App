@@ -7,13 +7,15 @@ const authentification_controller = require('../controllers/authentificationCont
 
 
 /* GET user. */
-router.get('/', user_controller.read_user);
+// Get OWN profile info 
+router.get('/myinfo', authentification_controller.validate_accessToken, user_controller.get_own_profile_info);
+// Get ANOTHER profile info 
 
 /* POST new user. */
 router.post('/', user_controller.create_new_user);
 
-/* PUT user. */
-router.put('/', user_controller.put_user);
+/* PUT OWN user. */
+router.put('/myinfo', authentification_controller.validate_accessToken, user_controller.update_user);
 
 /* DELETE user. */
 router.delete('/', user_controller.delete_user);

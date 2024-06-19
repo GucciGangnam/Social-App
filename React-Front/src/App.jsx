@@ -17,6 +17,7 @@ import { ErrorPage } from './pages/ErrorPage'
 import { SignupLogin } from './pages/SignupLogin'
 import { Home } from './pages/Home'
 import { MyProfile } from './pages/MyProfile'
+import { EditMyProfile } from './pages/EditMyProfile'
 import { Friends } from './pages/Friends'
 import { Messages } from './pages/Messages'
 import { UserProfile } from './pages/UserProfile'
@@ -59,6 +60,7 @@ function App() {
         <Route path="/login" element={<SignupLogin />} />
         <Route path='/home' element={<Home />} />
         <Route path='/myprofile' element={<MyProfile />} />
+        <Route path='/myprofile/edit' element={<EditMyProfile />} />
         <Route path='/myprofile/frinds' element={<Friends />} />
         <Route path='/messages' element={<Messages />} />
         <Route path='/user/*' element={<UserProfile />} />
