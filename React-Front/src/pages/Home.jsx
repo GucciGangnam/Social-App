@@ -19,7 +19,7 @@ export const Home = () => {
     // START
     // Set page loading
     const [pageLoading, setPageLoading] = useState(true);
-
+    const [userData, setUserData] = useState({});
     // fetch data. if JWT auth fails, redirect to login
 
 
@@ -127,7 +127,7 @@ export const Home = () => {
                     <EventLoading />
                     </>
                 )}
-                
+
             </div>
 
 

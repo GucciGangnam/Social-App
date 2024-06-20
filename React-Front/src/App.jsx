@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 // Compoents 
 import { NavigationBar } from './components/navigation/NavigationBar'
+// variables 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 // Styles
 import './App.css'
@@ -25,6 +27,33 @@ import { UserProfile } from './pages/UserProfile'
 // COMPONENT //
 
 function App() {
+
+  const [userData, setUserData] = useState({});
+  const fetchMyInfo = async () => {
+    try {
+        const token = localStorage.getItem('accessToken');
+        const response = await fetch(`${backendUrl}/users/myinfo`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        });
+        const data = await response.json();
+        if (!response.ok) {
+            alert(data.msg);
+            localStorage.removeItem('accessToken');
+        } else {
+            setUserData(data)
+            console.log(data)
+            localStorage.setItem('userData', JSON.stringify(data));
+            console.log("user data fetched sucesfully")
+        }
+    } catch (error) {
+        console.error('Error:', error.message);
+        // Handle errors as needed
+    }
+}
 
   const [isCreateNewEventShowing, setIsCreateNewEventShowing] = useState(false)
 
@@ -57,13 +86,13 @@ function App() {
 
 
       <Routes>
-        <Route path="/login" element={<SignupLogin />} />
-        <Route path='/home' element={<Home />} />
-        <Route path='/myprofile' element={<MyProfile />} />
-        <Route path='/myprofile/edit' element={<EditMyProfile />} />
-        <Route path='/myprofile/frinds' element={<Friends />} />
-        <Route path='/messages' element={<Messages />} />
-        <Route path='/user/*' element={<UserProfile />} />
+        <Route path="/login" element={<SignupLogin fetchMyInfo={fetchMyInfo} />} />
+        <Route path='/home' element={<Home userData={userData} fetchMyInfo={fetchMyInfo} />} />
+        <Route path='/myprofile' element={<MyProfile userData={userData} />} />
+        <Route path='/myprofile/edit' element={<EditMyProfile userData={userData} fetchMyInfo={fetchMyInfo} />} />
+        <Route path='/myprofile/friends' element={<Friends userData={userData} fetchMyInfo={fetchMyInfo} />} />
+        <Route path='/messages' element={<Messages userData={userData} fetchMyInfo={fetchMyInfo} />} />
+        <Route path='/user/:userId' element={<UserProfile fetchMyInfo={fetchMyInfo} />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
 

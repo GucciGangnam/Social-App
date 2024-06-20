@@ -6,123 +6,91 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 // COMPONENT
-export const EditMyProfile = () => {
+export const EditMyProfile = ({ fetchMyInfo }) => {
     const navigate = useNavigate();
 
 
     // States to store fetched data
-    const [userInfo, setUserInfo] = useState({});
-    const [pageLoading, setPageLoading] = useState(true);
-
-    // Run fetch data on page load
-    useEffect(() => {
-        fetchMyInfo();
-    }, []);
-// Fecth data function
-    const fetchMyInfo = async () => {
-        setPageLoading(true)
-        try {
-            const token = localStorage.getItem('accessToken');
-            const response = await fetch(`${backendUrl}/users/myinfo`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-            });
-            const data = await response.json();
-            if (!response.ok) {
-                alert(data.msg);
-                localStorage.removeItem('accessToken');
-                navigate('/login');
-            } else {
-                setUserInfo(data);
-            }
-        } catch (error) {
-            console.error('Error:', error.message);
-            // Handle errors as needed
-        } finally {
-            setPageLoading(false);
-        }
-    }
+    const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('userData')))
+    const [pageLoading, setPageLoading] = useState(false);
 
 
 
     // Change handlers
     const handleFirstNameChange = (e) => {
-        setUserInfo({
-            ...userInfo,
+        setUserData({
+            ...userData,
             PERSONAL_INFO: {
-                ...userInfo.PERSONAL_INFO,
+                ...userData.PERSONAL_INFO,
                 FIRST_NAME: e.target.value
             }
         });
     }
     const handleLastNameChange = (e) => {
-        setUserInfo({
-            ...userInfo,
+        setUserData({
+            ...userData,
             PERSONAL_INFO: {
-                ...userInfo.PERSONAL_INFO,
+                ...userData.PERSONAL_INFO,
                 LAST_NAME: e.target.value
             }
         });
     }
     const handleBioChange = (e) => {
-        setUserInfo({
-            ...userInfo,
+        setUserData({
+            ...userData,
             PERSONAL_INFO: {
-                ...userInfo.PERSONAL_INFO,
+                ...userData.PERSONAL_INFO,
                 BIO: e.target.value
             }
         });
     }
     const handleEmailChange = (e) => {
-        setUserInfo({
-            ...userInfo,
+        setUserData({
+            ...userData,
             PERSONAL_INFO: {
-                ...userInfo.PERSONAL_INFO,
+                ...userData.PERSONAL_INFO,
                 EMAIL: e.target.value
             }
         });
     }
 
     const handleSocialLinkDelete = (index) => {
-        setUserInfo({
-            ...userInfo,
+        setUserData({
+            ...userData,
             PERSONAL_INFO: {
-                ...userInfo.PERSONAL_INFO,
-                SOCIAL_LINKS: userInfo.PERSONAL_INFO.SOCIAL_LINKS.filter((_, i) => i !== index)
+                ...userData.PERSONAL_INFO,
+                SOCIAL_LINKS: userData.PERSONAL_INFO.SOCIAL_LINKS.filter((_, i) => i !== index)
             }
         });
     }
 
     const handleSocialLinkSiteNameChange = (e, index) => {
-        const newSocialLinks = [...userInfo.PERSONAL_INFO.SOCIAL_LINKS];
+        const newSocialLinks = [...userData.PERSONAL_INFO.SOCIAL_LINKS];
         newSocialLinks[index] = {
             ...newSocialLinks[index],
             SITE_NAME: e.target.value
         };
 
-        setUserInfo({
-            ...userInfo,
+        setUserData({
+            ...userData,
             PERSONAL_INFO: {
-                ...userInfo.PERSONAL_INFO,
+                ...userData.PERSONAL_INFO,
                 SOCIAL_LINKS: newSocialLinks
             }
         });
     };
 
     const handleSocialLinkLinkChange = (e, index) => {
-        const newSocialLinks = [...userInfo.PERSONAL_INFO.SOCIAL_LINKS];
+        const newSocialLinks = [...userData.PERSONAL_INFO.SOCIAL_LINKS];
         newSocialLinks[index] = {
             ...newSocialLinks[index],
             LINK: e.target.value
         };
 
-        setUserInfo({
-            ...userInfo,
+        setUserData({
+            ...userData,
             PERSONAL_INFO: {
-                ...userInfo.PERSONAL_INFO,
+                ...userData.PERSONAL_INFO,
                 SOCIAL_LINKS: newSocialLinks
             }
         });
@@ -134,12 +102,12 @@ export const EditMyProfile = () => {
             LINK: '',
         };
 
-        const newSocialLinks = [...userInfo.PERSONAL_INFO.SOCIAL_LINKS, newSocialLink];
+        const newSocialLinks = [...userData.PERSONAL_INFO.SOCIAL_LINKS, newSocialLink];
 
-        setUserInfo({
-            ...userInfo,
+        setUserData({
+            ...userData,
             PERSONAL_INFO: {
-                ...userInfo.PERSONAL_INFO,
+                ...userData.PERSONAL_INFO,
                 SOCIAL_LINKS: newSocialLinks
             }
         });
@@ -150,13 +118,13 @@ export const EditMyProfile = () => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
-    const handleOldPasswordChange = (e) => { 
+    const handleOldPasswordChange = (e) => {
         setOldPassword(e.target.value);
     }
-    const handleNewPasswordChange = (e) => { 
+    const handleNewPasswordChange = (e) => {
         setNewPassword(e.target.value);
     }
-    const handleConfirmNewPasswordChange = (e) => { 
+    const handleConfirmNewPasswordChange = (e) => {
         setConfirmNewPassword(e.target.value);
     }
     // Password change area / / / / / / / / / / / / / / / / / / / / / / / 
@@ -164,8 +132,7 @@ export const EditMyProfile = () => {
 
 
     // SUBMIT FORM HANDLER
-    const handleSubmitForm = async(e) => {
-        console.log('WWWWWWOOOOOOOWWWWWWW HOOLLUUPPP')
+    const handleSubmitForm = async (e) => {
         e.preventDefault();
         setPageLoading(true)
         try {
@@ -177,27 +144,24 @@ export const EditMyProfile = () => {
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    firstName : userInfo.PERSONAL_INFO.FIRST_NAME,
-                    lastName: userInfo.PERSONAL_INFO.LAST_NAME,
-                    bio : userInfo.PERSONAL_INFO.BIO,
-                    email : userInfo.PERSONAL_INFO.EMAIL,
-                    socialLinks : userInfo.PERSONAL_INFO.SOCIAL_LINKS
+                    firstName: userData.PERSONAL_INFO.FIRST_NAME,
+                    lastName: userData.PERSONAL_INFO.LAST_NAME,
+                    bio: userData.PERSONAL_INFO.BIO,
+                    email: userData.PERSONAL_INFO.EMAIL,
+                    socialLinks: userData.PERSONAL_INFO.SOCIAL_LINKS
                 })
             });
             const data = await response.json();
             if (!response.ok) {
-                console.log(5)
-                console.log('NOT OK')
                 console.log(data)
             } else {
-                console.log('YES OK')
                 fetchMyInfo();
                 console.log(data)
             }
         } catch (error) {
             console.error('Error:', error.message);
             // Handle errors as needed
-        } finally { 
+        } finally {
             setPageLoading(false)
         }
     }
@@ -211,14 +175,14 @@ export const EditMyProfile = () => {
                 onSubmit={handleSubmitForm}
                 className="EditMyProfile">
                 <div className="Header">
-                    Happen
+                    Profile
                 </div>
 
                 {/* avatar section  */}
                 <div className="Avatar-section">
                     <div className="Avatar-container">
                         <img
-                            src={userInfo.PERSONAL_INFO.AVATAR ? userInfo.PERSONAL_INFO.AVATAR : "/blank_user.jpg"}
+                            src={userData.PERSONAL_INFO.AVATAR ? userData.PERSONAL_INFO.AVATAR : "/blank_user.jpg"}
                             alt="Avatar"
                         />
                     </div>
@@ -229,27 +193,27 @@ export const EditMyProfile = () => {
                     <div className="Container">
                         <label>First name</label>
                         <input
-                            value={userInfo.PERSONAL_INFO.FIRST_NAME}
+                            value={userData.PERSONAL_INFO.FIRST_NAME}
                             onChange={handleFirstNameChange}
-                            placeholder={userInfo.PERSONAL_INFO.FIRST_NAME}
+                            placeholder={userData.PERSONAL_INFO.FIRST_NAME}
                             minLength={1}
                             required
                         />
 
                         <label>Last name</label>
                         <input
-                            value={userInfo.PERSONAL_INFO.LAST_NAME}
+                            value={userData.PERSONAL_INFO.LAST_NAME}
                             onChange={handleLastNameChange}
-                            placeholder={userInfo.PERSONAL_INFO.LAST_NAME}
+                            placeholder={userData.PERSONAL_INFO.LAST_NAME}
                             minLength={1}
                             required
                         />
 
                         <label>Bio</label>
                         <textarea
-                            value={userInfo.PERSONAL_INFO.BIO}
+                            value={userData.PERSONAL_INFO.BIO}
                             onChange={handleBioChange}
-                            placeholder={userInfo.PERSONAL_INFO.BIO}
+                            placeholder={userData.PERSONAL_INFO.BIO}
                             rows="3"
                             style={{ resize: "none" }}
                         />
@@ -260,7 +224,7 @@ export const EditMyProfile = () => {
                 <div className="Section">
                     Social Links
 
-                    {userInfo.PERSONAL_INFO.SOCIAL_LINKS.map((social, index) => (
+                    {userData.PERSONAL_INFO.SOCIAL_LINKS.map((social, index) => (
                         <div key={index} className="Container">
                             <button
                                 onClick={() => { handleSocialLinkDelete(index) }}
@@ -296,10 +260,10 @@ export const EditMyProfile = () => {
                     >
                         <label>Email</label>
                         <input
-                            value={userInfo.PERSONAL_INFO.EMAIL}
+                            value={userData.PERSONAL_INFO.EMAIL}
                             onChange={handleEmailChange}
                             type="email"
-                            placeholder={userInfo.PERSONAL_INFO.EMAIL}
+                            placeholder={userData.PERSONAL_INFO.EMAIL}
                             required />
                     </div>
                 </div>

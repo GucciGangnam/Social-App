@@ -1,6 +1,8 @@
 // IMPORTS 
 // React 
 import { useState } from "react"
+// RRD 
+import { useNavigate } from "react-router-dom";
 // Styles 
 import "../../pages/SignupLogin.css"
 // variables 
@@ -8,7 +10,9 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 // COMPONENTS 
 
-export const LoginEmail = ({ setFormSelector }) => {
+export const LoginEmail = ({ setFormSelector, fetchMyInfo }) => {
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState(
         {
@@ -61,7 +65,9 @@ export const LoginEmail = ({ setFormSelector }) => {
 
             if (response.ok) {
                 localStorage.setItem('accessToken', data.accessToken);
+                fetchMyInfo();
                 setIsLoggingIn(false);
+                navigate("/home")
                 
             }
 

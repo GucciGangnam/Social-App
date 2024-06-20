@@ -8,6 +8,10 @@ const usersSchema = new Schema({
         required: true,
     },
     PERSONAL_INFO: {
+        USER_NAME: {
+            type: String,
+            required: true,
+        },
         FIRST_NAME: {
             type: String,
             required: true,
@@ -43,6 +47,18 @@ const usersSchema = new Schema({
             default: [],
         },
         CONTACTS: {
+            type: Array,
+            default: [],
+        },
+        CONTACTS: {
+            type: Array,
+            default: [],
+        },
+        FRIEND_REQUESTS_IN: {
+            type: Array,
+            default: [],
+        },
+        FRIEND_REQUESTS_OUT: {
             type: Array,
             default: [],
         },

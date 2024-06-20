@@ -22,7 +22,7 @@ import { LoginX } from '../components/signuplogin/LoginX'
 
 
 // COMPONENTS //
-export const SignupLogin = () => {
+export const SignupLogin = ({fetchMyInfo}) => {
 
     // Form Selector
     const [formSelector, setFormSelector] = useState('SignupOptions')
@@ -37,12 +37,12 @@ export const SignupLogin = () => {
             {formSelector === 'SignupGoogle' && <SignupGoogle setFormSelector={setFormSelector} />}
             {formSelector === 'SignupX' && <SignupX setFormSelector={setFormSelector} />}
 
-            {formSelector === 'LoginOptions' && <LoginOptions setFormSelector={setFormSelector} />}
-            {formSelector === 'LoginEmail' && <LoginEmail setFormSelector={setFormSelector} />}
-            {formSelector === 'LoginMeta' && <LoginMeta setFormSelector={setFormSelector} />}
-            {formSelector === 'LoginApple' && <LoginApple setFormSelector={setFormSelector} />}
-            {formSelector === 'LoginGoogle' && <LoginGoogle setFormSelector={setFormSelector} />}
-            {formSelector === 'LoginX' && <LoginX setFormSelector={setFormSelector} />}
+            {formSelector === 'LoginOptions' && <LoginOptions setFormSelector={setFormSelector} fetchMyInfo={fetchMyInfo} />}
+            {formSelector === 'LoginEmail' && <LoginEmail setFormSelector={setFormSelector} fetchMyInfo={fetchMyInfo} />}
+            {formSelector === 'LoginMeta' && <LoginMeta setFormSelector={setFormSelector} fetchMyInfo={fetchMyInfo} />}
+            {formSelector === 'LoginApple' && <LoginApple setFormSelector={setFormSelector} fetchMyInfo={fetchMyInfo} />}
+            {formSelector === 'LoginGoogle' && <LoginGoogle setFormSelector={setFormSelector} fetchMyInfo={fetchMyInfo} />}
+            {formSelector === 'LoginX' && <LoginX setFormSelector={setFormSelector} fetchMyInfo={fetchMyInfo} />}
 
         </div>
     )

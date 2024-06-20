@@ -2,6 +2,7 @@
     background-color: var(--background);
     display: flex;
     flex-direction: column;
+    align-items: ;
     min-height: 100vh;
 
 }
@@ -67,7 +68,12 @@
 
 }
 
-.MyProfile .Bio {}
+.MyProfile .Bio {
+    color: var(--secondary-text);
+    max-height: 85px;
+    overflow: scroll;
+    text-overflow: ellipsis;
+}
 
 .MyProfile .Frineds-icon-container {
     /* outline: 1px solid blue; */
@@ -146,11 +152,13 @@
     /* Center content horizontally */
 }
 
-
-
-.MyProfile .Circle-SVG {}
-
-.MyProfile .Cirlce-name {}
+.MyProfile .Logout-button{ 
+    width: 100px;
+    height: 40px;
+    background-color: var(--element-background);
+    border: none;
+    border-radius: 5px;
+}
 
 
 

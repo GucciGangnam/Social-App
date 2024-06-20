@@ -9,46 +9,19 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 export const MyProfile = () => {
     const navigate = useNavigate();
 
-    const [userInfo, setUserInfo] = useState({});
-    const [pageLoading, setPageLoading] = useState(true);
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    const [pageLoading, setPageLoading] = useState(false);
 
-    useEffect(() => {
-        fetchMyInfo();
-    }, []);
-
-    useEffect(() => {
-        console.log(userInfo)
-    }, [userInfo])
-
-    const fetchMyInfo = async () => {
-        try {
-            const token = localStorage.getItem('accessToken');
-            const response = await fetch(`${backendUrl}/users/myinfo`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-            });
-            const data = await response.json();
-            if (!response.ok) {
-                alert(data.msg);
-                localStorage.removeItem('accessToken');
-                navigate('/login');
-            } else {
-                setUserInfo(data);
-                console.log(data)
-            }
-        } catch (error) {
-            console.error('Error:', error.message);
-            // Handle errors as needed
-        } finally {
-            setPageLoading(false);
-        }
-    }
 
     const handleFriendsBTNClick = () => {
         navigate("/myprofile/friends");
+    }
+
+    // Handle Log Out
+    const handleLogout = () => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('userData');
+        navigate('/login');
     }
 
     if (pageLoading) {
@@ -58,23 +31,23 @@ export const MyProfile = () => {
         return (
             <div className="MyProfile">
                 <div className="Header">
-                    Happen
+                    {userData.PERSONAL_INFO.USER_NAME}
                 </div>
 
                 <div className="Profile-info">
                     <div className="Avatar-container">
                         <img
-                            src={userInfo.PERSONAL_INFO.AVATAR ? userInfo.PERSONAL_INFO.AVATAR : "/blank_user.jpg"}
+                            src={userData.PERSONAL_INFO.AVATAR ? userData.PERSONAL_INFO.AVATAR : "/blank_user.jpg"}
                             alt="Avatar"
                         />
                     </div>
 
                     <div className="Personal-info">
                         <div className="Name">
-                            {userInfo.PERSONAL_INFO.FIRST_NAME} {userInfo.PERSONAL_INFO.LAST_NAME}
+                            {userData.PERSONAL_INFO.FIRST_NAME} {userData.PERSONAL_INFO.LAST_NAME}
                         </div>
                         <div className="Bio">
-                            {userInfo.PERSONAL_INFO.BIO}
+                                {userData.PERSONAL_INFO.BIO}
                         </div>
                     </div>
 
@@ -93,11 +66,11 @@ export const MyProfile = () => {
 
                 <div className="Edit-BTN-container">
                     <button
-                    onClick={() => { navigate('/myprofile/edit')}}>Edit</button>
+                        onClick={() => { navigate('/myprofile/edit') }}>Edit</button>
                 </div>
 
                 <div className="Social-links-container">
-                    {userInfo.PERSONAL_INFO.SOCIAL_LINKS && userInfo.PERSONAL_INFO.SOCIAL_LINKS.map((social, index) => (
+                    {userData.PERSONAL_INFO.SOCIAL_LINKS && userData.PERSONAL_INFO.SOCIAL_LINKS.map((social, index) => (
                         <div
                             className="Social-link"
                             key={index}
@@ -112,6 +85,15 @@ export const MyProfile = () => {
                 <div className="Circles-container">
                     {/* Circle components as in your original code */}
                     circles go here?
+                </div>
+
+
+                <div className="Edit-BTN-container">
+                    <button
+                        onClick={handleLogout}
+                        className="Logout-button">
+                        Log out
+                    </button>
                 </div>
 
                 <div className="Bottom-margin"></div>

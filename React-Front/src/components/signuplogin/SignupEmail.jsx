@@ -14,6 +14,7 @@ export const SignupEmail = ({ setFormSelector }) => {
 
     const [formData, setFormData] = useState(
         {
+            userName: '',
             firstName: '',
             lastName: '',
             email: '',
@@ -94,6 +95,14 @@ export const SignupEmail = ({ setFormSelector }) => {
         <div className="SignupEmail">
             <h3>Sign up with Email</h3>
             <form onSubmit={handleSignup}>
+                <input
+                    type="text"
+                    name="userName"
+                    value={formData.userName}
+                    onChange={handleChange}
+                    placeholder="User Name"
+                    required
+                />
                 <input
                     type="text"
                     name="firstName"
