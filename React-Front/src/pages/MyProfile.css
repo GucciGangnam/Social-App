@@ -73,12 +73,13 @@
     max-height: 85px;
     overflow: scroll;
     text-overflow: ellipsis;
+    
 }
 
-.MyProfile .Frineds-icon-container {
-    /* outline: 1px solid blue; */
-    width: 80px;
-    height: 80px;
+.MyProfile .Friends-icon-container {
+
+    min-width: 80px;
+    min-height: 80px;
     max-width: 80px;
     max-height: 80px;
     min-width: 80px;

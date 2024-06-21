@@ -58,7 +58,7 @@ export const Messages = () => {
 
             <div className={`Search ${searchShowing ? "show" : ""}`}>
                 <input 
-                    placeholder="Search"
+                    placeholder="Search contacts"
                     value={searchQuery}
                     onChange={handleSearchInputChange}
                 />

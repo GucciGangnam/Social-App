@@ -6,7 +6,7 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 // COMPONENT
-export const MyProfile = () => {
+export const MyProfile = ({ handleLogout }) => {
     const navigate = useNavigate();
 
     const userData = JSON.parse(localStorage.getItem('userData'));
@@ -17,12 +17,6 @@ export const MyProfile = () => {
         navigate("/myprofile/friends");
     }
 
-    // Handle Log Out
-    const handleLogout = () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('userData');
-        navigate('/login');
-    }
 
     if (pageLoading) {
         return <div>Loading...</div>;
@@ -47,7 +41,7 @@ export const MyProfile = () => {
                             {userData.PERSONAL_INFO.FIRST_NAME} {userData.PERSONAL_INFO.LAST_NAME}
                         </div>
                         <div className="Bio">
-                                {userData.PERSONAL_INFO.BIO}
+                            {userData.PERSONAL_INFO.BIO}
                         </div>
                     </div>
 

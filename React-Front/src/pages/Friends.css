@@ -99,6 +99,9 @@
     height: 150px;
     background-color: var(--background);
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .Friends .Contact{ 
     background-color: var(--element-background);

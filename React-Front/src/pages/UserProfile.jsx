@@ -115,7 +115,7 @@ export const UserProfile = ({ fetchMyInfo }) => {
         }
     }
 
-    const handleAcceptFriendRequest = async() => {
+    const handleAcceptFriendRequest = async () => {
         // make fetch to back end to update 
         try {
             const token = localStorage.getItem('accessToken');
@@ -140,6 +140,34 @@ export const UserProfile = ({ fetchMyInfo }) => {
             console.error('Error:', error.message);
             // Handle errors as needed
         }
+    }
+
+    const handleDeclineFriendRequest = async() => { 
+                // make fetch to back end to update 
+                console.log(user.ID)
+                try {
+                    const token = localStorage.getItem('accessToken');
+                    const response = await fetch(`${backendUrl}/users/declineaddfriend`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ senderID: user.ID })
+                    });
+                    const data = await response.json();
+                    if (!response.ok) {
+                        console.log("No good")
+                        console.log(data)
+                    } else {
+                        console.log("Yes good");
+                        fetchMyInfo();
+                        console.log(data);
+                    }
+                } catch (error) {
+                    console.error('Error:', error.message);
+                    // Handle errors as needed
+                }
     }
 
 
@@ -249,11 +277,10 @@ export const UserProfile = ({ fetchMyInfo }) => {
                 <div className="Profile-info">
 
                     <div className="Avatar-container">
-                        <img src="/Avatar-example.png"></img>
-                        {/* <img
-                        src={user.PERSONAL_INFO.AVATAR ? user.PERSONAL_INFO.AVATAR : "/blank_user.jpg"}
-                        alt="Avatar"
-                    /> */}
+                        <img
+                            src={user.PERSONAL_INFO.AVATAR ? user.PERSONAL_INFO.AVATAR : "/blank_user.jpg"}
+                            alt="Avatar"
+                        />
                     </div>
 
                     <div className="Personal-info">
@@ -296,11 +323,24 @@ export const UserProfile = ({ fetchMyInfo }) => {
                             <button>Message</button>
                         ) : (
                             myData.MAIN_DATA.FRIEND_REQUESTS_IN.includes(user.ID) ? (
-                                <button
-                                    style={{
-                                        background: "var(--primary-fill)"
-                                    }}
-                                    onClick={handleAcceptFriendRequest}>Accept Request</button>
+                                <div
+                                style={{
+                                    display:"flex",
+                                    gap:'10px'
+                                }}>
+                                    <button
+                                        style={{
+                                            background: "var(--green1"
+                                        }}
+                                        onClick={handleAcceptFriendRequest}>Accept Request</button>
+
+                                    <button
+                                        style={{
+                                            background: "var(--red1)"
+                                        }}
+                                        onClick={handleDeclineFriendRequest}>Decline request</button>
+                                </div>
+
                             ) : (
                                 myData.MAIN_DATA.FRIEND_REQUESTS_OUT.includes(user.ID) ? (
                                     <button

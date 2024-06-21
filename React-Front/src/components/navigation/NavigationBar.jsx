@@ -19,9 +19,12 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
     const [info, setInfo] = useState('');
     const [img, setImg] = useState(null);
     const [selectedDate, setSelectedDate] = useState(null); // State to store selected date and time
+    const [privacyPreference, setPrivacyPreference] = useState("Friends of friends")
 
-    const [privacyPreference, setPrivacyPreference] = useState("Friends only")
-    // const [selectedCircle, setSelectedCircle] = useState("All Friends")
+    // Handle Privacy preference 
+    const handlePrivacyPreference = (preference) => {
+        setPrivacyPreference(preference)
+    }
 
     // POST EVEN BTN HANDLER
     const postEvent = () => {
@@ -32,29 +35,14 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
         // console.log(selectedCircle)
     }
 
-    // Handle Privacy Button Toggle
-    const handlePrivacyBTNClick = () => {
-        if (privacyPreference === 'Friends only') {
-            setPrivacyPreference('Friends of friends')
-        }
-        if (privacyPreference === 'Friends of friends') {
-            setPrivacyPreference('Anyone')
-        }
-        if (privacyPreference === 'Anyone') {
-            setPrivacyPreference('Friends only')
-        }
-    }
-
     // CAMERA FUNCTIONS 
     const fileInputRef = useRef(null);
-
     const handleCameraClick = (event) => {
         event.preventDefault(); // Prevent the default action
         if (fileInputRef.current) {
             fileInputRef.current.click();
         }
     };
-
     const handlePhotoChange = (event) => {
         event.preventDefault(); // Prevent the default action
         const file = event.target.files[0];
@@ -70,24 +58,9 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
 
     // Information buttons handlers
     const [isPrivacyInfoShowing, setIsPrivacyInfoShowing] = useState(false);
-    const [isCircleInfoShowing, setIsCircleInfoShowing] = useState(false);
 
-    const privacyInfoBTN = () => {
-        setIsPrivacyInfoShowing(previous => !previous);
-    }
-    // const cirlceInfoBTN = () => {
-    //     setIsCircleInfoShowing(previous => !previous);
-    // }
 
-    // Handle Toggle date tim sleector 
-    const [dateTime, setDateTime] = useState('Now')
-    const handleToggleDateTime = () => {
-        if (dateTime === "Now") {
-            setDateTime('Later')
-        } else {
-            setDateTime("Now")
-        }
-    }
+
 
     return (
         <div
@@ -98,8 +71,8 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
 
             <div className="content-container">
 
-                <div className="Section">
-                    <h1>Make it happen</h1>
+                <div className="Header">
+                    Happen
                 </div>
                 <div className="Section">
                     <input
@@ -127,14 +100,19 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                             viewBox="0 0 24 24"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="13" r="3" stroke="var(--primary-fill)" strokeWidth="1.5" />
+                            <circle
+                                cx="12"
+                                cy="13"
+                                r="3"
+                                stroke="var(--primary-text)"
+                                strokeWidth="1" />
                             <path d="M2 13.3636C2 10.2994 2 8.76721 2.74902 7.6666C3.07328 7.19014 3.48995 6.78104 3.97524 6.46268C4.69555 5.99013 5.59733 5.82123 6.978 5.76086C7.63685 5.76086 8.20412 5.27068 8.33333 4.63636C8.52715 3.68489 9.37805 3 10.3663 3H13.6337C14.6219 3 15.4728 3.68489 15.6667 4.63636C15.7959 5.27068 16.3631 5.76086 17.022 5.76086C18.4027 5.82123 19.3044 5.99013 20.0248 6.46268C20.51 6.78104 20.9267 7.19014 21.251 7.6666C22 8.76721 22 10.2994 22 13.3636C22 16.4279 22 17.9601 21.251 19.0607C20.9267 19.5371 20.51 19.9462 20.0248 20.2646C18.9038 21 17.3433 21 14.2222 21H9.77778C6.65675 21 5.09624 21 3.97524 20.2646C3.48995 19.9462 3.07328 19.5371 2.74902 19.0607C2.53746 18.7498 2.38566 18.4045 2.27673 18"
-                                stroke="var(--primary-fill)"
-                                strokeWidth="1.5"
+                                stroke="var(--primary-text)"
+                                strokeWidth="1"
                                 strokeLinecap="round" />
                             <path d="M19 10H18"
-                                stroke="var(--primary-fill)"
-                                strokeWidth="1.5"
+                                stroke="var(--primary-text)"
+                                strokeWidth="1"
                                 strokeLinecap="round" />
                         </svg>
                     </div>
@@ -149,61 +127,27 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                 </div>
 
                 <div className="Section-buttons">
-
-                    <div className="Button-holder">
-                        <button
-                            onClick={handlePrivacyBTNClick}
-                            style={{
-                                backgroundColor: privacyPreference === "Friends only"
-                                    ? "var(--green1)"
-                                    : privacyPreference === "Friends of friends"
-                                        ? "var(--blue1)"
-                                        : privacyPreference === "Anyone"
-                                            ? "var(--red1)"
-                                            : "defaultColor"
-                            }}
-                        >
-                            {privacyPreference}
-                        </button>
-                        <button
-                            onClick={privacyInfoBTN}
-                            className="Info-btn">i</button>
-                    </div>
-
-                    <div className="Button-holder">
-                        <button
-                            style={{
-                                background: dateTime === "Now" ? "var(--primary-fill)" : "var(--secondary-fill)"
-                            }}
-                            onClick={handleToggleDateTime}>
-                            {dateTime}
-                        </button>
-                        {dateTime === "Later" && (
-                            <div className="Datetime-selector">
-                                <input className="DatePicker" type="datetime-local" placeholder="Enter Date and Time"></input>
-                            </div>
-                        )}
-                    </div>
-
+                    <button
+                        style={{
+                            background: privacyPreference === 'Public' ? "var(--red1)" : "var(--background)",
+                            color: privacyPreference === 'Public' ? "var(--primary-text)" : "var(--secondary-text)",
+                        }}
+                        onClick={() => { handlePrivacyPreference('Public') }}>Public</button>
+                    <button
+                        style={{
+                            background: privacyPreference === 'Friends of friends' ? "var(--blue1)" : "var(--background)",
+                            color: privacyPreference === 'Friends of friends' ? "var(--primary-text)" : "var(--secondary-text)",
+                        }}
+                        onClick={() => { handlePrivacyPreference('Friends of friends') }}>Friends of friends</button>
+                    <button
+                        style={{
+                            background: privacyPreference === 'Private' ? "var(--green1)" : "var(--background)",
+                            color: privacyPreference === 'Private' ? "var(--primary-text)" : "var(--secondary-text)",
+                        }}
+                        onClick={() => { handlePrivacyPreference('Private') }}>Private</button>
                 </div>
 
-                <button
-                    className="Submit-button"
-                    onClick={postEvent}>
-                    <svg
-                        width="80px"
-                        height="80px"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M13 15L16 12M16 12L13 9M16 12H8M7.2 20H16.8C17.9201 20 18.4802 20 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V7.2C20 6.0799 20 5.51984 19.782 5.09202C19.5903 4.71569 19.2843 4.40973 18.908 4.21799C18.4802 4 17.9201 4 16.8 4H7.2C6.0799 4 5.51984 4 5.09202 4.21799C4.71569 4.40973 4.40973 4.71569 4.21799 5.09202C4 5.51984 4 6.07989 4 7.2V16.8C4 17.9201 4 18.4802 4.21799 18.908C4.40973 19.2843 4.71569 19.5903 5.09202 19.782C5.51984 20 6.07989 20 7.2 20Z"
-                            stroke="var(--primary-fill)"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round" />
-                    </svg>
-                </button>
+
 
                 {/* {privacyPreference !== 'Anyone' && (
                     <div className="Section">
@@ -215,11 +159,14 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                 )} */}
 
                 <div className="Section">
-
+                    <button
+                        onClick={() => { setIsPrivacyInfoShowing(true); }}
+                        className="Info-btn">i</button>
                 </div>
 
-                <div className="Section">
-
+                <div className="Section-submit">
+                    <button
+                    className="Submit-button">Post</button>
                 </div>
 
             </div>
@@ -305,9 +252,9 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
 
 
 
-            {(isCircleInfoShowing || isPrivacyInfoShowing) && (
+            {isPrivacyInfoShowing && (
                 <div
-                    onClick={() => { setIsPrivacyInfoShowing(false); setIsCircleInfoShowing(false); }}
+                    onClick={() => { setIsPrivacyInfoShowing(false); }}
                     className="Info-overlay"
                 >
                     {isPrivacyInfoShowing && (
@@ -315,7 +262,7 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                             <strong
                                 style={{
                                     color: "var(--red1)"
-                                }}>Anyone</strong>
+                                }}>Public</strong>
                             Anyone within a certain distance of you will be able to see this event regardless of wheather you are connected to them.
                             <br />
                             <br />
@@ -329,24 +276,7 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                             <strong
                                 style={{
                                     color: "var(--green1)"
-                                }}>Circle only</strong>
-                            Only the people in your selected circle will be able to see this event.
-                        </div>
-                    )}
-
-                    {isCircleInfoShowing && (
-                        <div className="Info-popup">
-                            <strong
-                                style={{
-                                    color: "var(--blue1)"
-                                }}>Friends of friends</strong>
-                            Once a friend joins your group, their friends will also be able to see this event.
-                            <br />
-                            <br />
-                            <strong
-                                style={{
-                                    color: "var(--green1)"
-                                }}>Circle only</strong>
+                                }}>Private</strong>
                             Only the people in your selected circle will be able to see this event.
                         </div>
                     )}

@@ -65,6 +65,8 @@
     border-radius: 10px;
     width: 90%;
     font-size: 16px;
+    background-color: var(--background);
+    color: var(--primary-text);
 }
 .EditMyProfile textarea {
     padding: 10px;
@@ -72,6 +74,8 @@
     border-radius: 10px;
     width: 90%;
     font-size: 16px;
+    background-color: var(--background);
+    color: var(--primary-text);
 }
 .EditMyProfile textarea:focus{ 
     outline: 2px solid var(--primary-fill);

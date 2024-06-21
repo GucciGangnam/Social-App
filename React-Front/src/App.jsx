@@ -2,7 +2,7 @@
 // React 
 import { useState, useEffect } from 'react'
 // RRD
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 // Compoents 
 import { NavigationBar } from './components/navigation/NavigationBar'
 // variables 
@@ -27,6 +27,7 @@ import { UserProfile } from './pages/UserProfile'
 // COMPONENT //
 
 function App() {
+  const navigate = useNavigate();
 
   const [userData, setUserData] = useState({});
   const fetchMyInfo = async () => {
@@ -54,6 +55,14 @@ function App() {
         // Handle errors as needed
     }
 }
+
+const handleLogout = () => {
+  console.log(' app level log out ')
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('userData');
+  navigate('/login');
+}
+
 
   const [isCreateNewEventShowing, setIsCreateNewEventShowing] = useState(false)
 
@@ -86,13 +95,13 @@ function App() {
 
 
       <Routes>
-        <Route path="/login" element={<SignupLogin fetchMyInfo={fetchMyInfo} />} />
-        <Route path='/home' element={<Home userData={userData} fetchMyInfo={fetchMyInfo} />} />
-        <Route path='/myprofile' element={<MyProfile userData={userData} />} />
-        <Route path='/myprofile/edit' element={<EditMyProfile userData={userData} fetchMyInfo={fetchMyInfo} />} />
-        <Route path='/myprofile/friends' element={<Friends userData={userData} fetchMyInfo={fetchMyInfo} />} />
-        <Route path='/messages' element={<Messages userData={userData} fetchMyInfo={fetchMyInfo} />} />
-        <Route path='/user/:userId' element={<UserProfile fetchMyInfo={fetchMyInfo} />} />
+        <Route path="/login" element={<SignupLogin fetchMyInfo={fetchMyInfo} handleLogout={handleLogout}/>} />
+        <Route path='/home' element={<Home userData={userData} fetchMyInfo={fetchMyInfo} handleLogout={handleLogout} />} />
+        <Route path='/myprofile' element={<MyProfile userData={userData} handleLogout={handleLogout} />} />
+        <Route path='/myprofile/edit' element={<EditMyProfile userData={userData} fetchMyInfo={fetchMyInfo}handleLogout={handleLogout} />} />
+        <Route path='/myprofile/friends' element={<Friends userData={userData} fetchMyInfo={fetchMyInfo} handleLogout={handleLogout}/>} />
+        <Route path='/messages' element={<Messages userData={userData} fetchMyInfo={fetchMyInfo}handleLogout={handleLogout} />} />
+        <Route path='/user/:userId' element={<UserProfile fetchMyInfo={fetchMyInfo}handleLogout={handleLogout} />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
 

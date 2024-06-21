@@ -440,6 +440,38 @@ exports.accept_add_friend = asyncHandler(async (req, res, next) => {
     }
 });
 
+//DECLINE ADD FRIEND
+exports.decline_add_friend = asyncHandler(async (req, res, next) => {
+    try {
+        const senderId = req.body.senderID;
+        const receiverId = req.userId;
+
+        // Find sender and receiver objects
+        const senderOBJ = await User.findOne({ ID: senderId });
+        const receiverOBJ = await User.findOne({ ID: receiverId });
+
+        if (!senderOBJ || !receiverOBJ) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Update sender's friend requests out
+        await User.updateOne(
+            { ID: senderId },
+            { $pull: { 'MAIN_DATA.FRIEND_REQUESTS_OUT': receiverId } }
+        );
+
+        // Update receiver's friend requests in (if needed)
+        await User.updateOne(
+            { ID: receiverId },
+            { $pull: { 'MAIN_DATA.FRIEND_REQUESTS_IN': senderId } }
+        );
+
+        res.status(200).json({ message: 'Friend request cancelled successfully' });
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 // DELETE
 exports.delete_user = (req, res, next) => {

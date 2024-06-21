@@ -24,10 +24,12 @@ router.post('/', user_controller.create_new_user);
 router.put('/myinfo', authentification_controller.validate_accessToken, user_controller.update_user);
 // Create friend request
 router.put('/addfriend', authentification_controller.validate_accessToken, user_controller.add_friend)
-// Deelete friend request
+// Cencel friend request
 router.put('/canceladdfriend', authentification_controller.validate_accessToken, user_controller.cancel_add_friend)
 // Accept friend request
 router.put('/acceptaddfriend', authentification_controller.validate_accessToken, user_controller.accept_add_friend )
+// Decline friend request
+router.put('/declineaddfriend', authentification_controller.validate_accessToken, user_controller.decline_add_friend)
 
 /* DELETE user. */
 router.delete('/', user_controller.delete_user);

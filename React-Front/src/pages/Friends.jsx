@@ -10,7 +10,7 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 // Components 
 
 // COMPOENNT 
-export const Friends = () => {
+export const Friends = ({handleLogout}) => {
     const navigate = useNavigate();
     const userData = JSON.parse(localStorage.getItem('userData'));
 
@@ -59,7 +59,7 @@ export const Friends = () => {
             });
             const data = await response.json();
             if (!response.ok) {
-                console.log("no good")
+                handleLogout();
             } else {
                 console.log("yes good")
                 setContactList(data);
