@@ -7,12 +7,23 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
+var eventsRouter = require('./routes/events');
 // CORS
 const cors = require('cors');
 // Configure .env
 require('dotenv').config();
 
 var app = express();
+
+// cloudinaryConfig.js
+const cloudinary = require('cloudinary').v2;
+
+// Configuration
+cloudinary.config({ 
+    cloud_name: 'dljdeodtd', 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_API_KEY
+});
 
 // CORS setup
 const corsOptions = {
@@ -59,6 +70,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
+app.use('/events', eventsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

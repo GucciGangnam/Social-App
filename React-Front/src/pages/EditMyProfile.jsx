@@ -1,5 +1,5 @@
 // IMPORTS 
-import React, { useEffect, useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./EditMyProfile.css";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -18,6 +18,7 @@ export const EditMyProfile = ({ fetchMyInfo }) => {
 
     // Change handlers
     const handleFirstNameChange = (e) => {
+        console.log("hello")
         setUserData({
             ...userData,
             PERSONAL_INFO: {
@@ -53,7 +54,6 @@ export const EditMyProfile = ({ fetchMyInfo }) => {
             }
         });
     }
-
     const handleSocialLinkDelete = (index) => {
         setUserData({
             ...userData,
@@ -63,7 +63,6 @@ export const EditMyProfile = ({ fetchMyInfo }) => {
             }
         });
     }
-
     const handleSocialLinkSiteNameChange = (e, index) => {
         const newSocialLinks = [...userData.PERSONAL_INFO.SOCIAL_LINKS];
         newSocialLinks[index] = {
@@ -79,7 +78,6 @@ export const EditMyProfile = ({ fetchMyInfo }) => {
             }
         });
     };
-
     const handleSocialLinkLinkChange = (e, index) => {
         const newSocialLinks = [...userData.PERSONAL_INFO.SOCIAL_LINKS];
         newSocialLinks[index] = {
@@ -95,7 +93,6 @@ export const EditMyProfile = ({ fetchMyInfo }) => {
             }
         });
     };
-
     const handleAddNewSocialLink = () => {
         const newSocialLink = {
             SITE_NAME: '',
@@ -112,6 +109,66 @@ export const EditMyProfile = ({ fetchMyInfo }) => {
             }
         });
     };
+
+
+    // UPLOAD PHOTO
+    // Cloudinary
+    const cloudName = 'dljdeodtd'
+    const presetKey = import.meta.env.VITE_CLD_PRESET_KEY
+
+
+
+
+    // CAMERA FUNCTIONS 
+    const [imgURL, setImgURL] = useState(null);
+    const [uploading, setUploading] = useState(false);
+    const [img, setImg] = useState(null);
+
+
+    const fileInputRef = useRef(null);
+
+    const handleAvatarClick = (event) => {
+        event.preventDefault();
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+
+    const handleFileChange = async (event) => {
+        event.preventDefault(); // Prevent the default action
+        setUploading(true)
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImg(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', presetKey)
+        try {
+            const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('Error:', errorData.message);
+            } else {
+                const data = await response.json();
+                setImgURL(data.secure_url)
+                fetchMyInfo();
+                setUploading(false)
+                // Handle successful response (e.g., update state with uploaded image URL)
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    };
+
 
     // Password change area / / / / / / / / / / / / / / / / / / / / / / 
     const [oldPassword, setOldPassword] = useState('');
@@ -148,7 +205,8 @@ export const EditMyProfile = ({ fetchMyInfo }) => {
                     lastName: userData.PERSONAL_INFO.LAST_NAME,
                     bio: userData.PERSONAL_INFO.BIO,
                     email: userData.PERSONAL_INFO.EMAIL,
-                    socialLinks: userData.PERSONAL_INFO.SOCIAL_LINKS
+                    socialLinks: userData.PERSONAL_INFO.SOCIAL_LINKS,
+                    imageURL: imgURL
                 })
             });
             const data = await response.json();
@@ -180,13 +238,21 @@ export const EditMyProfile = ({ fetchMyInfo }) => {
 
                 {/* avatar section  */}
                 <div className="Avatar-section">
-                    <div className="Avatar-container">
-                        <img
-                            src={userData.PERSONAL_INFO.AVATAR ? userData.PERSONAL_INFO.AVATAR : "/blank_user.jpg"}
-                            alt="Avatar"
-                        />
-                    </div>
+                    <img
+                        src={userData.PERSONAL_INFO.AVATAR ? userData.PERSONAL_INFO.AVATAR : (img || '/Black-pp.jpg')}
+                        alt="Avatar"
+                        onClick={handleAvatarClick}
+                    />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        capture="user"
+                        ref={fileInputRef}
+                        style={{ display: 'none' }}
+                        onChange={handleFileChange}
+                    />
                 </div>
+
                 {/* Personal info section  */}
                 <div className="Section">
                     Personal Info
@@ -297,12 +363,22 @@ export const EditMyProfile = ({ fetchMyInfo }) => {
                     </div>
                 </div>
 
-                <button
-                    type="submit">Save</button>
-
+                {uploading ? (
+                    <button
+                        style={{
+                            background: "var(--red1)"
+                        }}
+                        type="button">
+                        Uploading image
+                    </button>
+                ) : (
+                    <button
+                        type="submit">Save
+                    </button>
+                )}
 
                 <div className="Bottom-margin"></div>
-            </form>
+            </form >
         );
 }
 

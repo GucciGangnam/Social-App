@@ -228,6 +228,7 @@ exports.get_multiple_profile_info_by_ids = asyncHandler(async (req, res, next) =
                 FIRST_NAME: user.PERSONAL_INFO.FIRST_NAME,
                 LAST_NAME: user.PERSONAL_INFO.LAST_NAME,
                 USER_NAME: user.PERSONAL_INFO.USER_NAME,
+                AVATAR: user.PERSONAL_INFO.AVATAR
             };
             // Push the userInfo object to the array
             contactArray.push(userInfo);
@@ -239,6 +240,7 @@ exports.get_multiple_profile_info_by_ids = asyncHandler(async (req, res, next) =
     // Return the array of user info objects as JSON response
     return res.status(200).json(contactArray);
 });
+// get single user by ID 
 
 
 
@@ -319,6 +321,8 @@ exports.update_user = [
             userToUpdate.PERSONAL_INFO.EMAIL = req.body.email;
             // Update user's SOCIAL_LINKS in PERSONAL_INFO
             userToUpdate.PERSONAL_INFO.SOCIAL_LINKS = req.body.socialLinks;
+            // Update user's AVATAR in PERSONAL_INFO
+            userToUpdate.PERSONAL_INFO.AVATAR = req.body.imageURL
 
 
             // Save the updated user document

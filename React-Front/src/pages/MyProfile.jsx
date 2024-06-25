@@ -31,7 +31,7 @@ export const MyProfile = ({ handleLogout }) => {
                 <div className="Profile-info">
                     <div className="Avatar-container">
                         <img
-                            src={userData.PERSONAL_INFO.AVATAR ? userData.PERSONAL_INFO.AVATAR : "/blank_user.jpg"}
+                            src={userData.PERSONAL_INFO.AVATAR ? userData.PERSONAL_INFO.AVATAR : "/Black-pp.jpg"}
                             alt="Avatar"
                         />
                     </div>

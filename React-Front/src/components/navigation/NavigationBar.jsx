@@ -4,6 +4,14 @@ import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom";
 import "./NavigationBar.css"
 import DateTimePicker from 'react-datetime-picker';
+// Variables 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+
+// Cloudinary
+// import { cloudinary } from 'cloudinary-core';
+
+
 
 // COMPONENT 
 
@@ -12,28 +20,25 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
 
     // Use navigate
     const navigate = useNavigate();
-
-
     // Form States 
     const [title, setTitle] = useState('');
     const [info, setInfo] = useState('');
-    const [img, setImg] = useState(null);
-    const [selectedDate, setSelectedDate] = useState(null); // State to store selected date and time
+    const [imgURL, setImgURL] = useState('');
     const [privacyPreference, setPrivacyPreference] = useState("Friends of friends")
+    const [startTime, setStartTime] = useState(new Date());
+
+    const [uploading, setUploading] = useState(false)
 
     // Handle Privacy preference 
     const handlePrivacyPreference = (preference) => {
         setPrivacyPreference(preference)
     }
 
-    // POST EVEN BTN HANDLER
-    const postEvent = () => {
-        console.log(title)
-        console.log(info)
-        console.log(img)
-        console.log(privacyPreference)
-        // console.log(selectedCircle)
-    }
+    // Cloudinary
+    const cloudName = 'dljdeodtd'
+    const presetKey = import.meta.env.VITE_CLD_PRESET_KEY
+
+
 
     // CAMERA FUNCTIONS 
     const fileInputRef = useRef(null);
@@ -43,8 +48,12 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
             fileInputRef.current.click();
         }
     };
-    const handlePhotoChange = (event) => {
+
+
+    const [img, setImg] = useState(null);
+    const handlePhotoChange = async (event) => {
         event.preventDefault(); // Prevent the default action
+        setUploading(true)
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
@@ -54,11 +63,70 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
             };
             reader.readAsDataURL(file);
         }
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', presetKey)
+        try {
+            const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('Error:', errorData.message);
+            } else {
+                const data = await response.json();
+                setImgURL(data.secure_url)
+                console.log('Post request successful:', data.secure_url);
+                setUploading(false)
+                // Handle successful response (e.g., update state with uploaded image URL)
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
     };
 
     // Information buttons handlers
     const [isPrivacyInfoShowing, setIsPrivacyInfoShowing] = useState(false);
 
+    // Submit new event btn
+    const submitNewEvent = async (e) => {
+        e.preventDefault();
+        try {
+            const token = localStorage.getItem('accessToken');
+            const response = await fetch(`${backendUrl}/events/new`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    eventTitle: title,
+                    eventInfo: info,
+                    eventIMG: imgURL,
+                    eventStartTime: new Date(),
+                    eventPrivacyPreference: privacyPreference
+                })
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                console.log(data.msg)
+            } else {
+                // console.log(data.event._id)
+                setTitle('')
+                setInfo('')
+                setImg(null)
+                setPrivacyPreference('Friends of friends')
+                setIsCreateNewEventShowing(false)
+                navigate('/event/' + data.event._id)
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+            // Handle errors as needed
+        }
+
+    }
 
 
 
@@ -69,16 +137,19 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
             }}
             className="NavigationBar">
 
-            <div className="content-container">
+            <form
+                onSubmit={submitNewEvent}
+                className="content-container">
 
                 <div className="Header">
                     Happen
                 </div>
                 <div className="Section">
                     <input
-                        placeholder="Title"
+                        placeholder="Title (required)"
                         value={title}
-                        onChange={(e) => { setTitle(e.target.value) }} />
+                        onChange={(e) => { setTitle(e.target.value) }}
+                        required />
                     <input
                         placeholder="Add some info about this event"
                         value={info}
@@ -126,20 +197,25 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                     />
                 </div>
 
+
+
                 <div className="Section-buttons">
                     <button
+                        type="button"
                         style={{
                             background: privacyPreference === 'Public' ? "var(--red1)" : "var(--background)",
                             color: privacyPreference === 'Public' ? "var(--primary-text)" : "var(--secondary-text)",
                         }}
                         onClick={() => { handlePrivacyPreference('Public') }}>Public</button>
                     <button
+                        type="button"
                         style={{
                             background: privacyPreference === 'Friends of friends' ? "var(--blue1)" : "var(--background)",
                             color: privacyPreference === 'Friends of friends' ? "var(--primary-text)" : "var(--secondary-text)",
                         }}
                         onClick={() => { handlePrivacyPreference('Friends of friends') }}>Friends of friends</button>
                     <button
+                        type="button"
                         style={{
                             background: privacyPreference === 'Private' ? "var(--green1)" : "var(--background)",
                             color: privacyPreference === 'Private' ? "var(--primary-text)" : "var(--secondary-text)",
@@ -149,14 +225,7 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
 
 
 
-                {/* {privacyPreference !== 'Anyone' && (
-                    <div className="Section">
-                        <button>Circle btn</button>
-                        <button
-                            onClick={cirlceInfoBTN}
-                            className="Info-btn">i</button>
-                    </div>
-                )} */}
+
 
                 <div className="Section">
                     <button
@@ -164,13 +233,69 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                         className="Info-btn">i</button>
                 </div>
 
-                <div className="Section-submit">
+                <div className="Section-time">
                     <button
-                    className="Submit-button">Post</button>
+                        type="button"
+                        className="Time-button">Now</button>
                 </div>
 
-            </div>
+                <div className="Section-submit">
+                    {uploading ? (
+                        <button
+                        style={{
+                            background: "var(--red1)"
+                        }}
+                            type="button"
+                            className="Submit-button">
+                            Uploading image
+                        </button>
+                    ) : (
+                        <button
+                        style={{
+                            background: "var(--green1)"
+                        }}
+                            type="submit"
+                            className="Submit-button">
+                            Post
+                        </button>
+                    )}
 
+                </div>
+
+            </form>
+
+            {isPrivacyInfoShowing && (
+                <div
+                    onClick={() => { setIsPrivacyInfoShowing(false); }}
+                    className="Info-overlay"
+                >
+                    {isPrivacyInfoShowing && (
+                        <div className="Info-popup">
+                            <strong
+                                style={{
+                                    color: "var(--red1)"
+                                }}>Public</strong>
+                            Anyone within a certain distance of you will be able to see this event regardless of wheather you are connected to them.
+                            <br />
+                            <br />
+                            <strong
+                                style={{
+                                    color: "var(--blue1)"
+                                }}>Friends of friends</strong>
+                            Once a friend joins your group, their friends will also be able to see this event.
+                            <br />
+                            <br />
+                            <strong
+                                style={{
+                                    color: "var(--green1)"
+                                }}>Private</strong>
+                            Only the people in your selected circle will be able to see this event.
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {/* Botton van bar */}
             <div className="NavBar">
                 <svg
                     className="Home-svg"
@@ -249,40 +374,6 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                         strokeLinejoin="round" />
                 </svg>
             </div>
-
-
-
-            {isPrivacyInfoShowing && (
-                <div
-                    onClick={() => { setIsPrivacyInfoShowing(false); }}
-                    className="Info-overlay"
-                >
-                    {isPrivacyInfoShowing && (
-                        <div className="Info-popup">
-                            <strong
-                                style={{
-                                    color: "var(--red1)"
-                                }}>Public</strong>
-                            Anyone within a certain distance of you will be able to see this event regardless of wheather you are connected to them.
-                            <br />
-                            <br />
-                            <strong
-                                style={{
-                                    color: "var(--blue1)"
-                                }}>Friends of friends</strong>
-                            Once a friend joins your group, their friends will also be able to see this event.
-                            <br />
-                            <br />
-                            <strong
-                                style={{
-                                    color: "var(--green1)"
-                                }}>Private</strong>
-                            Only the people in your selected circle will be able to see this event.
-                        </div>
-                    )}
-                </div>
-            )}
-
 
 
 

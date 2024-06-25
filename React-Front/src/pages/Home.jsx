@@ -7,26 +7,48 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // Components
 import { EventLoading } from "../components/home/EventLoading";
-import { Event } from "../components/home/Event";
+// Variables 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 
 
 // COMPONENT 
-export const Home = () => {
+export const Home = ({ handleLogout, userData }) => {
     const navigate = useNavigate();
     // ON PAGE LOAD
     // START
     // Set page loading
     const [pageLoading, setPageLoading] = useState(true);
-    const [userData, setUserData] = useState({});
-    // fetch data. if JWT auth fails, redirect to login
-
-
-
-
+    const [events, setEvents] = useState([]);
+    // fetch events. if JWT auth fails, redirect to login
+    async function fetchUserEvents() {
+        try {
+            const token = localStorage.getItem('accessToken');
+            const response = await fetch(`${backendUrl}/events`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                if (response.status === 403 || response.status === 401) {
+                    handleLogout();
+                }
+                console.log(data.msg)
+            } else {
+                setEvents(data.events)
+                setPageLoading(false)
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+            // Handle errors as needed
+        }
+    }
     useEffect(() => {
-        // get users home data
+        fetchUserEvents();
     }, [])
 
 
@@ -59,6 +81,11 @@ export const Home = () => {
     // Button handlers 
     const handleMyProfileClick = () => {
         navigate("/myprofile")
+    }
+    // OPEN EVENT 
+    const openEvent = (id) => { 
+        console.log("opening event: " + id);
+        navigate('/event/'+id);
     }
 
 
@@ -102,12 +129,42 @@ export const Home = () => {
 
             <div className="Event-container">
 
-                {pageLoading && (
+                {pageLoading ? (
                     <>
-                    <EventLoading />
-                    <EventLoading />
-                    <EventLoading />
-                    <EventLoading />
+                        <EventLoading />
+                        <EventLoading />
+                        <EventLoading />
+                        <EventLoading />
+                    </>
+                ) : (
+                    <>
+                        {events.length > 0 ? (
+                            events.map(event => (
+                                <div
+                                onClick={() => { openEvent(event._id)}}
+                                    key={event._id}
+                                    className="Event">
+                                    <div className="Event-background">
+                                        <div className="Atendees-container">
+                                            <div className="Avatar-container">
+                                                <img src="/Avatar-example.png" alt="Avatar" />
+                                            </div>
+                                            <div className="Atendee-count">
+                                                +{event.PUBLIC_DATA.EVENT_ATTENDEE_LIST.length}
+                                            </div>
+                                        </div>
+                                        <div className="IMG-container">
+                                            <img src={event.PUBLIC_DATA.EVENT_IMG} alt="Event" />
+                                        </div>
+                                        <div className="Title-container">
+                                            {event.PUBLIC_DATA.EVENT_TITLE}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No events found</p>
+                        )}
                     </>
                 )}
 
@@ -119,12 +176,12 @@ export const Home = () => {
 
             <div className="Event-container">
 
-            {pageLoading && (
+                {pageLoading && (
                     <>
-                    <EventLoading />
-                    <EventLoading />
-                    <EventLoading />
-                    <EventLoading />
+                        <EventLoading />
+                        <EventLoading />
+                        <EventLoading />
+                        <EventLoading />
                     </>
                 )}
 

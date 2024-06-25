@@ -278,7 +278,7 @@ export const UserProfile = ({ fetchMyInfo }) => {
 
                     <div className="Avatar-container">
                         <img
-                            src={user.PERSONAL_INFO.AVATAR ? user.PERSONAL_INFO.AVATAR : "/blank_user.jpg"}
+                            src={user.PERSONAL_INFO.AVATAR ? user.PERSONAL_INFO.AVATAR : "/Black-pp.jpg"}
                             alt="Avatar"
                         />
                     </div>

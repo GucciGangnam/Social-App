@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "cloudinary-core": "^2.13.1",
     "dotenv": "^16.4.5",
     "react": "^18.2.0",
     "react-datetime-picker": "^6.0.1",

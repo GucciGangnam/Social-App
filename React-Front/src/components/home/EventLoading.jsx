@@ -1,6 +1,6 @@
 // IMPORTS 
 // Styles
-import "./Event.css";
+import "../../pages/Event.css"
 // React
 
 

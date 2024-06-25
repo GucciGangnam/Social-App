@@ -1,0 +1,99 @@
+.EventPage {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* background-color: red; */
+    padding: 10px;
+}
+
+.EventPage .Header {
+    color: var(--primary-fill);
+    font-size: 30px;
+
+}
+
+.EventPage .Title-section {
+    color: var(--primary-Text);
+    font-size: 20px;
+    text-align: center;
+
+}
+
+.EventPage .IMG-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* outline: 1px solid blue; */
+    /* height: 300px; */
+
+}
+
+.EventPage .Event-img{ 
+
+    border-radius: 10px;
+    max-width: 500px;
+    max-height: 500px;
+}
+
+.EventPage .Meta-section {
+    /* outline: 1px solid pink; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.EventPage .Attendees {
+
+    min-width: 50%;
+    max-width: 50%;
+
+}
+
+.EventPage .Attendee-avatars-container {
+    min-width: 100%;
+    display: flex;
+    gap: 3px;
+
+}
+
+.EventPage .Attendee-avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    outline: 1px solid black;
+}
+
+
+
+.EventPage .Privacy-preference {
+    color: var(--secondary-text);
+    font-size: 12px;
+
+}
+
+.EventPage .Info-section {
+    /* outline: 1px solid green; */
+}
+
+.EventPage .Info {
+    color: var(--secondary-text);
+}
+
+.EventPage .Button-section {
+
+    display: flex;
+    justify-content: center;
+}
+
+.EventPage .Button-section button {
+    width: 100px;
+    height: 40px;
+    background-color: var(--element-background);
+    border: none;
+    border-radius: 5px;
+}
+
+.EventPage .Bottom-margin {
+    margin-bottom: 100px;
+}
