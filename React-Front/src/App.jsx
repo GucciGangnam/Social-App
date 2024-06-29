@@ -2,7 +2,7 @@
 // React 
 import { useState, useEffect } from 'react'
 // RRD
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
 // Compoents 
 import { NavigationBar } from './components/navigation/NavigationBar'
 // variables 
@@ -22,6 +22,7 @@ import { MyProfile } from './pages/MyProfile'
 import { EditMyProfile } from './pages/EditMyProfile'
 import { Friends } from './pages/Friends'
 import { Messages } from './pages/Messages'
+import { Chat } from './pages/Chat';
 import { UserProfile } from './pages/UserProfile'
 import { EventPage } from './pages/EventPage';
 
@@ -125,6 +126,7 @@ const handleLogout = () => {
         <Route path='/myprofile/edit' element={<EditMyProfile userData={userData} fetchMyInfo={fetchMyInfo}handleLogout={handleLogout} />} />
         <Route path='/myprofile/friends' element={<Friends userData={userData} fetchMyInfo={fetchMyInfo} handleLogout={handleLogout}/>} />
         <Route path='/messages' element={<Messages userData={userData} fetchMyInfo={fetchMyInfo}handleLogout={handleLogout} />} />
+        <Route path='/messages/:chatID' element={<Chat userData={userData} fetchMyInfo={fetchMyInfo}handleLogout={handleLogout} />} />
         <Route path='/user/:userId' element={<UserProfile fetchMyInfo={fetchMyInfo}handleLogout={handleLogout} />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>

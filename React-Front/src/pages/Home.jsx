@@ -40,6 +40,7 @@ export const Home = ({ handleLogout, userData }) => {
                 console.log(data.msg)
             } else {
                 setEvents(data.events)
+                console.log(data.events)
                 setPageLoading(false)
             }
         } catch (error) {
@@ -147,7 +148,7 @@ export const Home = ({ handleLogout, userData }) => {
                                     <div className="Event-background">
                                         <div className="Atendees-container">
                                             <div className="Avatar-container">
-                                                <img src="/Avatar-example.png" alt="Avatar" />
+                                            <img src={event.PUBLIC_DATA.ADMIN_AVATAR || "/Black-pp.jpg"} alt="Avatar" />
                                             </div>
                                             <div className="Atendee-count">
                                                 +{event.PUBLIC_DATA.EVENT_ATTENDEE_LIST.length}
@@ -170,7 +171,7 @@ export const Home = ({ handleLogout, userData }) => {
 
             </div>
 
-            <div className="Event-date-seperator">
+            {/* <div className="Event-date-seperator">
                 Upcoming
             </div>
 
@@ -185,7 +186,7 @@ export const Home = ({ handleLogout, userData }) => {
                     </>
                 )}
 
-            </div>
+            </div> */}
 
 
 

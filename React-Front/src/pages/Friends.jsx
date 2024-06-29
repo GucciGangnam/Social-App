@@ -152,7 +152,7 @@ export const Friends = ({handleLogout}) => {
                 Requests
             </div>
 
-            <div className="Friend-container">
+
 
             <div className="Friend-container">
                 {contactRequestsList.map((contact) => (
@@ -167,7 +167,6 @@ export const Friends = ({handleLogout}) => {
                 ))}
             </div>
 
-            </div>
 
             <div className="Section-seperator">
                 Contact

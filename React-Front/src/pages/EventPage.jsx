@@ -13,42 +13,13 @@ export const EventPage = ({ handleLogout }) => {
     const userDataString = localStorage.getItem("userData");
     const userData = JSON.parse(userDataString);
 
-    // fetch admins avatr
-    const [adminAvatar, setAdminAvatar] = useState('/Black-pp.jpg')
-
-    const fetchAdminAvatar = async(adminID) => { 
-        console.log(adminID)
-        try{ 
-            const token = localStorage.getItem('accessToken');
-            const response = await fetch(`${backendUrl}/users/profile/findbyids`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({ arrayOfIDs: [adminID] })
-            });
-            const data = await response.json();
-            if (!response.ok) {
-                if (response.status === 403) {
-                    handleLogout();
-                }
-                console.log(data.msg)
-            } else {
-                console.log('XXXXXXXXXXXX')
-                setAdminAvatar(data[0].AVATAR)
-            }
-        } catch (error) { 
-            console.error(error)
-        }
-    }
 
 
-    console.log(userData)
+
+
 
     useEffect(() => {
         fetchSingleEvent();
-        console.log(eventOBJ)
     }, [id]);
 
     const [eventOBJ, setEventOBJ] = useState();
@@ -72,8 +43,6 @@ export const EventPage = ({ handleLogout }) => {
                 console.log(data.msg)
             } else {
                 setEventOBJ(data.event);
-
-                fetchAdminAvatar(data.event.PUBLIC_DATA.EVENT_ADMIN)
                 setPageLoading(false);
                 console.log(data.event)
             }
@@ -173,6 +142,13 @@ export const EventPage = ({ handleLogout }) => {
         }
     }
 
+    // Hande Attendee Overlay 
+    const [isAttendeeOverlayShowing, setIsAttendeeOverlayShowing] = useState(false);
+
+    const handleShowHideAO = () => {
+        setIsAttendeeOverlayShowing(prevState => !prevState);
+    };
+
     {
         if (pageLoading) {
             return (
@@ -194,30 +170,50 @@ export const EventPage = ({ handleLogout }) => {
                 </div>
                 <div className="Meta-section">
                     <div className="Attendees">
-                        <div className="Attendee-avatars-container">
-                            {eventOBJ.PUBLIC_DATA.EVENT_ATTENDEE_LIST.map((attendee) => (
+                        <div
+                            onClick={handleShowHideAO}
+                            className="Attendee-avatars-container">
+                            {eventOBJ.PUBLIC_DATA.EVENT_ATTENDEE_LIST.map((user, index) => (
                                 <img
-                                src={adminAvatar}
-                                    key={attendee}
-                                    className="Attendee-avatar">
-                                </img>
+                                    className="Attendee-avatar"
+                                    src={user.PERSONAL_INFO.AVATAR || '/Black-pp.jpg'}
+                                    key={index}
+                                />
                             ))}
                         </div>
                     </div>
                     <div className="Privacy-preference">{eventOBJ.PUBLIC_DATA.EVENT_PRIVACY_PREFERENCE}</div>
                 </div>
+
                 <div className="Info-section">
                     <strong>Info</strong>
                     <div className="Info">
                         {eventOBJ.PUBLIC_DATA.EVENT_INFO}
                     </div>
                 </div>
+
+
                 <div className="Button-section">
                     {userData.ID === eventOBJ.PUBLIC_DATA.EVENT_ADMIN ? (
-                        <button onClick={handleCancelEvent}>Cancel event</button>
+                        <div
+                            style={{
+                                display: "flex",
+                                gap: "10px"
+                            }}>
+                            <button onClick={handleCancelEvent}>Cancel event</button>
+                            <button onClick={() => { navigate(`/messages/${id}`)}}>Chat</button>
+                            {/* <button onClick={handleEditEvent}>Chat</button> */}
+                        </div>
                     ) : (
-                        eventOBJ.PUBLIC_DATA.EVENT_ATTENDEE_LIST.includes(userData.ID) ? (
-                            <button onClick={handleLeaveEvent}>Leave</button>
+                        eventOBJ.PUBLIC_DATA.EVENT_ATTENDEE_LIST.some(attendee => attendee.ID === userData.ID) ? (
+                            <div
+                                style={{
+                                    display: "flex",
+                                    gap: "10px"
+                                }}>
+                                <button onClick={handleLeaveEvent}>Leave</button>
+                                <button onClick={() => { navigate(`/messages/${id}`)}}>Chat</button>
+                            </div>
                         ) : (
                             <button onClick={handleRequestToJoinEvent}>Join</button>
                         )
@@ -226,6 +222,23 @@ export const EventPage = ({ handleLogout }) => {
 
                 <div className="Bottom-margin">
                 </div>
+
+                {isAttendeeOverlayShowing && (
+                    <div
+                        onClick={handleShowHideAO}
+                        className="Overlay">
+                        <div className="Attendee-List_overlay">
+                            {eventOBJ.PUBLIC_DATA.EVENT_ATTENDEE_LIST.map((user) => (
+                                <div
+                                    key={user.ID}
+                                    onClick={() => { navigate(`/user/${user.PERSONAL_INFO.USER_NAME}`) }}
+                                    className="Attendee-name">
+                                    {`${user.PERSONAL_INFO.FIRST_NAME} ${user.PERSONAL_INFO.LAST_NAME}`}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
             </div>
         )

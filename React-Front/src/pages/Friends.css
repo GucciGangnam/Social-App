@@ -96,7 +96,7 @@
     font-weight: bold;
 }
 .Friends .Friend-container{
-    height: 150px;
+    height: fit-content;
     background-color: var(--background);
     padding: 10px;
     display: flex;

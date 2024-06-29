@@ -322,7 +322,9 @@ exports.update_user = [
             // Update user's SOCIAL_LINKS in PERSONAL_INFO
             userToUpdate.PERSONAL_INFO.SOCIAL_LINKS = req.body.socialLinks;
             // Update user's AVATAR in PERSONAL_INFO
-            userToUpdate.PERSONAL_INFO.AVATAR = req.body.imageURL
+            if (req.body.imageURL) {
+                userToUpdate.PERSONAL_INFO.AVATAR = req.body.imageURL
+            }
 
 
             // Save the updated user document

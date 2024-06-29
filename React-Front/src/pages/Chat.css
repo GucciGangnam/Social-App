@@ -1,0 +1,84 @@
+.Chat {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    height:calc(100vh - 100px);
+    z-index: 13;
+    overflow: hidden;
+}
+
+.Chat .Header {
+    color: var(--primary-fill);
+    top: 0;
+    /* Ensure it is fixed at the top */
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--background);
+    z-index: 12;
+    transition: height 300ms ease, opacity 300ms ease;
+    height: 60px;
+    opacity: 1;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 
+    0 6px 6px rgba(0, 0, 0, 0.2);
+}
+
+.Chat .Chat-window {
+    /* outline: 1px solid blue; */
+    width: 100vw;
+    min-height: 300px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    justify-content: end;
+    overflow: scroll;
+
+}
+
+.Chat .Input {
+    background-color: var(--element-background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.Chat .Input input {
+    background-color: var(--background);
+    width: 100%;
+    padding: 10px;
+    border: none;;
+    border-radius: 10px;
+    font-size: 16px;
+}
+.Chat .Input input:focus {
+outline: none;;
+}
+
+
+
+/* MESSAGE WOINDOW  */
+.Chat .Message-container{
+    display: flex;
+    background-color: var(--element-background);
+    border-radius: 10px;
+    padding: 5px;
+    gap: 10px;
+    width: fit-content;
+}
+.Chat .Message-avatar{
+    max-width: 20px;
+    max-height: 20px;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    
+}
+.Chat .Message-content{
+    
+}

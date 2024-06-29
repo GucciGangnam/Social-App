@@ -146,7 +146,7 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                 </div>
                 <div className="Section">
                     <input
-                        placeholder="Title (required)"
+                        placeholder="What you up to?"
                         value={title}
                         onChange={(e) => { setTitle(e.target.value) }}
                         required />

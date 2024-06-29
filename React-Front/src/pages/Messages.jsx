@@ -1,13 +1,15 @@
 // IMPORTS 
 // Styles
 import "./Messages.css"
-// Components 
-
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom";
+// Variables 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 // COMPOENNT 
-export const Messages = () => {
+export const Messages = ({ handleLogout }) => {
+    const navigate = useNavigate();
 
 
 
@@ -35,6 +37,38 @@ export const Messages = () => {
         }
     }
 
+
+    const [EventsArray, setEventsArray] = useState([])
+    // Fetch user events 
+    async function fetchEvenetsImIn() {
+        try {
+            const token = localStorage.getItem('accessToken');
+            const response = await fetch(`${backendUrl}/events/eventsimattending`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                if (response.status === 403 || response.status === 401) {
+                    handleLogout();
+                }
+                console.log(data.msg)
+            } else {
+                setEventsArray(data.events)
+                console.log(data.events)
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+            // Handle errors as needed
+        }
+    }
+    useEffect(() => {
+        fetchEvenetsImIn();
+    }, [])
+
     return (
         <div className="Messages">
             <div className="Header">
@@ -57,7 +91,7 @@ export const Messages = () => {
             </div>
 
             <div className={`Search ${searchShowing ? "show" : ""}`}>
-                <input 
+                <input
                     placeholder="Search contacts"
                     value={searchQuery}
                     onChange={handleSearchInputChange}
@@ -84,13 +118,15 @@ export const Messages = () => {
 
             <div className="Convo-container">
 
-                <div
-                onClick={() => { console.log("Convo clicked")}}
-                className="Group-Convo">
-                    Name
-                    <div className="Notification">
+
+                {EventsArray.map((eventOBJ, index) => (
+                    <div
+                    onClick={() => { navigate(`/messages/${eventOBJ._id}`)}}
+                        key={index}
+                        className="Group-Convo">
+                        {eventOBJ.PUBLIC_DATA.EVENT_TITLE}
                     </div>
-                </div>
+                ))}
 
 
             </div>

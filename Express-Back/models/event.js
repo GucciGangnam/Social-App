@@ -35,6 +35,10 @@ const eventsSchema = new Schema({
             type: String,
             required: true,
         },
+        EVENT_CHAT_LOG: { 
+            type: Array,
+            required: false,
+        }
     },
     PRIVATE_DATA: {
         // Add fields here as needed

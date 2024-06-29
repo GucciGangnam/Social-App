@@ -139,6 +139,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+    width: 25px;
+    height: 25px;
 
 }
 .Event .Avatar-container img {
@@ -173,6 +176,7 @@
     height: 100%;
 }
 
+
 .Event .Title-container {
     outline: 1px solid var(--secondary-fill);
     background-color: var(--secondary-fill);
@@ -184,4 +188,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 12px;
 }
