@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 // Define the main users schema with nested PERSONAL_INFO and META_DATA
 const usersSchema = new Schema({
+    DEMO_USER: { 
+        type: Boolean,
+        required: false,
+    },
     ID: {
         type: String,
         required: true,

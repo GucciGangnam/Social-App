@@ -38,6 +38,10 @@ const eventsSchema = new Schema({
         EVENT_CHAT_LOG: { 
             type: Array,
             required: false,
+        },
+        EVENT_LOCATION: { 
+            type: Object,
+            required: false
         }
     },
     PRIVATE_DATA: {

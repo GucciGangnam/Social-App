@@ -164,7 +164,7 @@ export const Home = ({ handleLogout, userData }) => {
                                 </div>
                             ))
                         ) : (
-                            <p>No events found</p>
+                            <p>Nobody's hanging out right now - Try creating an event</p>
                         )}
                     </>
                 )}

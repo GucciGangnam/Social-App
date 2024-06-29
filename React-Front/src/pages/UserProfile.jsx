@@ -320,7 +320,10 @@ export const UserProfile = ({ fetchMyInfo }) => {
                 <div className="BTN-container">
                     {
                         myData.MAIN_DATA.CONTACTS.includes(user.ID) ? (
-                            <button>Message</button>
+                            <button
+                            style={{
+                                color: 'var(--primary-text)'
+                            }}>Message</button>
                         ) : (
                             myData.MAIN_DATA.FRIEND_REQUESTS_IN.includes(user.ID) ? (
                                 <div
@@ -330,13 +333,15 @@ export const UserProfile = ({ fetchMyInfo }) => {
                                 }}>
                                     <button
                                         style={{
-                                            background: "var(--green1"
+                                            background: "var(--green1",
+                                            color: 'var(--primary-text)'
                                         }}
                                         onClick={handleAcceptFriendRequest}>Accept Request</button>
 
                                     <button
                                         style={{
-                                            background: "var(--red1)"
+                                            background: "var(--red1)",
+                                            color: 'var(--primary-text)'
                                         }}
                                         onClick={handleDeclineFriendRequest}>Decline request</button>
                                 </div>

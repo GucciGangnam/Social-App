@@ -154,6 +154,49 @@ exports.create_new_user = [
     })
 ];
 
+// CREATE DEMO USER 
+exports.create_demo_user = asyncHandler(async(req, res, next) => { 
+
+
+    const userID = "DEMOUSER" + uuidv4();
+    const randomNumber = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // Create new user
+    const newUser = new User({
+        DEMO_USER: true,
+        ID: userID,
+        PERSONAL_INFO: {
+            USER_NAME: "Dome_user" + randomNumber,
+            FIRST_NAME: "Demo",
+            LAST_NAME: "User",
+            EMAIL: "demo_user"+randomNumber+"@email.com",
+            PASSWORD: uuidv4(),
+            SOCIAL_LINKS: [], // Assuming you have socialLinks in req.body
+            BIO: "Hi, welcome to my profile",
+            AVATAR: null
+        },
+        MAIN_DATA: {
+            CIRCLES: [{
+                ALL_FRIENDS: [],
+                CLOSE_FRIENDS: []
+            }],
+            CONTACTS: ["UID6064eb6a-6f20-4c1f-af7b-944e77b7d690", "UIDa7b738fc-d117-48f4-bec0-6d706deed570", "UID3207de9d-6f96-4961-859f-66d4f2180b9d", "UID3e17273f-449a-4bb7-ad62-e90c1d050f6", "UIDf87533c1-e3c2-4233-9899-cef175c3d693", "UIDdda2c9b0-1150-4c4b-90c0-b2e73a07d032", "UIDb71303e1-b1ff-42d3-a731-8ade8c6d1838", "UID391ea8d3-1560-4ca4-afb1-3d0c475b5384"]
+        },
+        META_DATA: {
+            SIGNUP_DATE: new Date()
+        }
+    });
+    try {
+        await newUser.save();
+        return res.status(201).json({ email: newUser.PERSONAL_INFO.EMAIL, password: newUser.PERSONAL_INFO.PASSWORD  });
+    } catch (error) {
+        console.error("Failed to create new user:", error);
+        return res.status(500).json({ errors: [{ msg: 'Failed to create new user' }] });
+    }
+
+
+})
+
 
 
 // READ

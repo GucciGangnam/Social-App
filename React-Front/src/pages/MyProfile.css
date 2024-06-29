@@ -114,9 +114,10 @@
 .MyProfile .Edit-BTN-container button {
     width: 100px;
     height: 40px;
-    background-color: var(--element-background);
+    background-color: var(--secondary-fill);
     border: none;
     border-radius: 5px;
+    color: var(--primary-text);
 }
 
 
@@ -130,7 +131,7 @@
 }
 
 .MyProfile .Social-link {
-    background-color: var(--element-background);
+    background-color: var(--primary-fill);
     padding: 10px;
     border-radius: 25px;
     text-align: center;
@@ -160,7 +161,7 @@
 .MyProfile .Logout-button{ 
     width: 100px;
     height: 40px;
-    background-color: var(--element-background);
+    background-color: var(--secondary-fill);
     border: none;
     border-radius: 5px;
 }

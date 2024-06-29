@@ -28,7 +28,7 @@ exports.create_new_event = asyncHandler(async (req, res, next) => {
         }
 
         // Extract event details from the request body
-        const { eventTitle, eventIMG, eventInfo, eventPrivacyPreference, eventStartTime } = req.body;
+        const { eventTitle, eventIMG, eventInfo, eventPrivacyPreference, eventStartTime, eventLocation } = req.body;
         const invitees = admin.MAIN_DATA.CONTACTS;
 
         // Validate required fields
@@ -48,6 +48,7 @@ exports.create_new_event = asyncHandler(async (req, res, next) => {
                 EVENT_INVITEE_LIST: invitees,
                 EVENT_ATTENDEE_LIST: [admin.ID],  // Changed to array
                 EVENT_START_TIME: eventStartTime,
+                EVENT_LOCATION: eventLocation,
             },
         });
 

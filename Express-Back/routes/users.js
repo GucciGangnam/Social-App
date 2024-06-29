@@ -16,8 +16,12 @@ router.post('/profile/findbyids', authentification_controller.validate_accessTok
 
 
 
+
+
 /* POST new user. */
 router.post('/', user_controller.create_new_user);
+// CREATE DEMO USER
+router.post('/demouser', user_controller.create_demo_user)
 
 /* PUT OWN user. */
 // put own info

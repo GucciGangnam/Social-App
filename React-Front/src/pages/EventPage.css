@@ -14,7 +14,8 @@
 
 .EventPage .Title-section {
     color: var(--primary-Text);
-    font-size: 15px;
+    font-size: 20px;
+    font-weight: bold;
     text-align: center;
 
 }
@@ -95,6 +96,7 @@
     background-color: var(--element-background);
     border: none;
     border-radius: 5px;
+    color: var(--primary-Text);
 }
 
 .EventPage .Bottom-margin {
@@ -120,7 +122,7 @@
 
 .EventPage .Attendee-List_overlay{ 
 width: calc(90% - 30px);
-min-height: 200px;
+height: fit-content;
 max-height: 300px;
 background-color: var(--background);
 border-radius: 10px;

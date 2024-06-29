@@ -1,6 +1,6 @@
 // IMPORTS
 // Styles 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import "./NavigationBar.css"
 import DateTimePicker from 'react-datetime-picker';
@@ -18,6 +18,7 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 // State for showing and hiding create new event window
 export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShowing }) => {
 
+
     // Use navigate
     const navigate = useNavigate();
     // Form States 
@@ -26,13 +27,36 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
     const [imgURL, setImgURL] = useState('');
     const [privacyPreference, setPrivacyPreference] = useState("Friends of friends")
     const [startTime, setStartTime] = useState(new Date());
+    const [location, setLocation] = useState(null)
+
+    useEffect(() => {
+        console.log(location);
+    }, [location])
+
 
     const [uploading, setUploading] = useState(false)
 
     // Handle Privacy preference 
     const handlePrivacyPreference = (preference) => {
-        setPrivacyPreference(preference)
-    }
+        if (preference === 'Public') {
+            if ('geolocation' in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        setLocation({
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude,
+                        });
+                    },
+                    (error) => {
+                        alert(error.message)
+                    }
+                );
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        }
+        setPrivacyPreference(preference);
+    };
 
     // Cloudinary
     const cloudName = 'dljdeodtd'
@@ -106,7 +130,8 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                     eventInfo: info,
                     eventIMG: imgURL,
                     eventStartTime: new Date(),
-                    eventPrivacyPreference: privacyPreference
+                    eventPrivacyPreference: privacyPreference,
+                    eventLocation: location,
                 })
             });
             const data = await response.json();
@@ -117,6 +142,8 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                 setTitle('')
                 setInfo('')
                 setImg(null)
+                setImgURL('')
+                setLocation(null)
                 setPrivacyPreference('Friends of friends')
                 setIsCreateNewEventShowing(false)
                 navigate('/event/' + data.event._id)
@@ -233,27 +260,24 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                         className="Info-btn">i</button>
                 </div>
 
-                <div className="Section-time">
+                {/* <div className="Section-time">
                     <button
                         type="button"
                         className="Time-button">Now</button>
-                </div>
+                </div> */}
 
                 <div className="Section-submit">
                     {uploading ? (
                         <button
-                        style={{
-                            background: "var(--red1)"
-                        }}
                             type="button"
-                            className="Submit-button">
+                            className="Submit-button-flashing">
                             Uploading image
                         </button>
                     ) : (
                         <button
-                        style={{
-                            background: "var(--green1)"
-                        }}
+                            style={{
+                                background: "var(--green1)"
+                            }}
                             type="submit"
                             className="Submit-button">
                             Post
@@ -289,7 +313,7 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                                 style={{
                                     color: "var(--green1)"
                                 }}>Private</strong>
-                            Only the people in your selected circle will be able to see this event.
+                            Only your friends will be able to see this event.
                         </div>
                     )}
                 </div>

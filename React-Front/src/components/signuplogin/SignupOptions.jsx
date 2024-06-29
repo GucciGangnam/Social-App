@@ -1,44 +1,99 @@
 // IMPORTS 
+// React 
+import { useNavigate } from "react-router-dom";
 // Styles 
 import "../../pages/SignupLogin.css"
+// Variables 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 // COMPONENTS 
-export const SignupOptions = ({setFormSelector}) => { 
+export const SignupOptions = ({ setFormSelector, fetchMyInfo }) => {
+    const navigate = useNavigate();
 
 
 
     // Button handlers
-    const handleSignupWithEmail = () => { 
+    const handleSignupWithEmail = () => {
         setFormSelector('SignupEmail')
     }
 
-    const handleSignupWithMeta = () => { 
+    const handleSignupWithMeta = () => {
         setFormSelector('SignupMeta')
     }
 
-    const handleSignupWithApple = () => { 
+    const handleSignupWithApple = () => {
         setFormSelector('SignupApple')
     }
 
-    const handleSignupWithGoogle = () => { 
+    const handleSignupWithGoogle = () => {
         setFormSelector('SignupGoogle')
     }
 
-    const handleSignupWithX = () => { 
+    const handleSignupWithX = () => {
         setFormSelector('SignupX')
     }
 
-    const handleLoginButton = () => { 
+    const handleLoginButton = () => {
         setFormSelector('LoginOptions')
     }
 
-    return ( 
-        <div className="SignupOptions">
+    const handleCreateDemoAccount = async () => {
+        try {
+            const token = localStorage.getItem('accessToken');
+            const response = await fetch(`${backendUrl}/users/demouser`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+            const userData = await response.json();
             
+            if (!response.ok) {
+                console.log(userData.msg); // Log the error message from the server
+            } else {
+                console.log(userData.email);
+                console.log(userData.password);
+                
+                try {
+                    const loginResponse = await fetch(`${backendUrl}/auth/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: userData.email,
+                            password: userData.password
+                        })
+                    });
+                    
+                    const loginData = await loginResponse.json();
+                    
+                    if (!loginResponse.ok) {
+                        console.log("Error logging into demo account");
+                    } else {
+                        localStorage.setItem('accessToken', loginData.accessToken);
+                        fetchMyInfo(); // Assuming this function fetches additional user info
+                        navigate("/home"); // Redirect to home page after successful login
+                    }
+                } catch (loginError) {
+                    console.error('Error:', loginError.message);
+                    // Handle login errors
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+            // Handle fetch or other errors
+        }
+    };
+
+    return (
+        <div className="SignupOptions">
+
 
             <h3>Sign up</h3>
             <button
-            onClick={handleSignupWithEmail}>
+                onClick={handleSignupWithEmail}>
                 <img
                     src='/At-logo.png'
                     alt='Email'
@@ -48,7 +103,7 @@ export const SignupOptions = ({setFormSelector}) => {
             </button>
 
             <button
-            onClick={handleSignupWithMeta}>
+                onClick={handleSignupWithMeta}>
                 <img
                     src='/Meta-logo.png'
                     alt='Meta'
@@ -58,7 +113,7 @@ export const SignupOptions = ({setFormSelector}) => {
             </button>
 
             <button
-            onClick={handleSignupWithApple}>
+                onClick={handleSignupWithApple}>
                 <img
                     src='/Apple-logo.png'
                     alt='Apple'
@@ -68,7 +123,7 @@ export const SignupOptions = ({setFormSelector}) => {
             </button>
 
             <button
-            onClick={handleSignupWithGoogle}>
+                onClick={handleSignupWithGoogle}>
                 <img
                     src='/Google-logo.png'
                     alt='Google'
@@ -78,7 +133,7 @@ export const SignupOptions = ({setFormSelector}) => {
             </button>
 
             <button
-            onClick={handleSignupWithX}>
+                onClick={handleSignupWithX}>
                 <img
                     src='/X-logo.png'
                     alt='X'
@@ -88,10 +143,18 @@ export const SignupOptions = ({setFormSelector}) => {
             </button>
             or
             <button
-            className="Main"
-            onClick={handleLoginButton}>
+                className="Main"
+                onClick={handleLoginButton}>
                 <div></div>
                 Log in
+                <div></div>
+            </button>
+
+            <button
+                className="Main"
+                onClick={handleCreateDemoAccount}>
+                <div></div>
+                Demo Account
                 <div></div>
             </button>
 

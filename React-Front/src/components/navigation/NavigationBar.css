@@ -149,9 +149,41 @@
     position: relative; /* Needed to position the pseudo-element */
 }
 
+.NavigationBar .Submit-button-flashing{ 
+    width: 100px;
+    height: 40px;
+    border: none;
+    background-color: var(--red1);
+    border-radius: 10px;
+    color: var(--primary-text);
+    position: relative; /* Needed to position the pseudo-element */
+}
 
 
-.NavigationBar .DatePicker {}
+
+.NavigationBar .Submit-button-flashing { 
+    width: 100px;
+    height: 40px;
+    border: none;
+    background-color: var(--red1);
+    border-radius: 10px;
+    color: var(--primary-text);
+    position: relative;
+    box-shadow: 0 0 10px var(--red1);
+    animation: glow 1s infinite;
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 10px var(--red1);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--red1), 0 0 30px var(--red1), 0 0 40px var(--red1);
+    }
+    100% {
+        box-shadow: 0 0 10px var(--red1);
+    }
+}
 
 
 
@@ -186,7 +218,7 @@
 
 /* Home Icon */
 .NavBar .Home-svg {
-    stroke: var(--icon-deselected);
+    stroke: var(--background);
     z-index: 0;
     transition: 300ms ease-in-out;
 }
@@ -211,7 +243,7 @@
 /* Messages Icon */
 .NavBar .Message-svg {
     /* stroke: var(--icon-deselected); */
-    fill: var(--icon-deselected);
+    fill: var(--background);
     transition: 300ms ease-in-out;
 }
 

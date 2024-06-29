@@ -1,6 +1,7 @@
 // IMPORTS 
 // Reactr 
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 // Styles 
 import "../../pages/SignupLogin.css"
 // variables 
@@ -9,6 +10,7 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 // COMPONENTS 
 
 export const SignupEmail = ({ setFormSelector }) => {
+    const navigate = useNavigate();
 
     const [confirmPasswordPH, setConfirmPasswordPH] = useState('Confirm Password')
 
@@ -83,7 +85,7 @@ export const SignupEmail = ({ setFormSelector }) => {
             }
 
             if (response.ok) {
-                console.log("front end got a good response");
+                window.location.reload();
             }
 
         } catch (error) {

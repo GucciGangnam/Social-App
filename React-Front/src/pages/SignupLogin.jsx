@@ -30,7 +30,7 @@ export const SignupLogin = ({fetchMyInfo}) => {
     return (
         <div className='SignupLogin'>
             <h1>Logo</h1>
-            {formSelector === 'SignupOptions' && <SignupOptions setFormSelector={setFormSelector} />}
+            {formSelector === 'SignupOptions' && <SignupOptions setFormSelector={setFormSelector} fetchMyInfo={fetchMyInfo} />}
             {formSelector === 'SignupEmail' && <SignupEmail setFormSelector={setFormSelector} />}
             {formSelector === 'SignupMeta' && <SignupMeta setFormSelector={setFormSelector} />}
             {formSelector === 'SignupApple' && <SignupApple setFormSelector={setFormSelector} />}

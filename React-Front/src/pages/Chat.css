@@ -2,17 +2,19 @@
     gap: 10px;
     display: flex;
     flex-direction: column;
-    height:calc(100vh - 100px);
-    z-index: 13;
+    height: calc(100vh - 80px);
     overflow: hidden;
+    position: relative;
 }
 
 .Chat .Header {
     color: var(--primary-fill);
     top: 0;
     /* Ensure it is fixed at the top */
-    width: 100%;
+    width: calc(100% - 20px);
     max-width: 800px;
+    padding-left: 10px;
+    padding-right: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,25 +25,33 @@
     opacity: 1;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     font-size: 30px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 
-    0 6px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2),
+        0 6px 6px rgba(0, 0, 0, 0.2);
+    position: fixed;
+
 }
 
 .Chat .Chat-window {
     /* outline: 1px solid blue; */
+    margin-top: 60px;
     width: 100vw;
-    min-height: 300px;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
     padding: 10px;
     justify-content: end;
-    overflow: scroll;
+    overflow-y: scroll;
+}
 
+.Chat .Message-user-name {
+    font-size: 10px;
+    color: var(--secondary-text);
+    padding-top: 5px;
 }
 
 .Chat .Input {
+    position: fixed;
+    bottom: 0px;
+    width: calc(100vw - 30px);
     background-color: var(--element-background);
     display: flex;
     justify-content: center;
@@ -53,32 +63,36 @@
     background-color: var(--background);
     width: 100%;
     padding: 10px;
-    border: none;;
+    border: none;
+    ;
     border-radius: 10px;
     font-size: 16px;
 }
+
 .Chat .Input input:focus {
-outline: none;;
+    outline: none;
+    ;
 }
 
 
 
 /* MESSAGE WOINDOW  */
-.Chat .Message-container{
+.Chat .Message-container {
     display: flex;
     background-color: var(--element-background);
     border-radius: 10px;
     padding: 5px;
     gap: 10px;
     width: fit-content;
+    max-width: calc(100vw - 30px)
 }
-.Chat .Message-avatar{
+
+.Chat .Message-avatar {
     max-width: 20px;
     max-height: 20px;
     border-radius: 50%;
     aspect-ratio: 1/1;
-    
+
 }
-.Chat .Message-content{
-    
-}
+
+.Chat .Message-content {}

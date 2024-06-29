@@ -112,7 +112,7 @@
 .UserProfile .BTN-container button {
     width: 100px;
     height: 40px;
-    background-color: var(--element-background);
+    background-color: var(--secondary-fill);
     border: none;
     border-radius: 5px;
 }
