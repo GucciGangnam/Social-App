@@ -1,5 +1,6 @@
 // IMPORTS 
 // React 
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // Styles 
 import "../../pages/SignupLogin.css"
@@ -11,6 +12,8 @@ export const SignupOptions = ({ setFormSelector, fetchMyInfo }) => {
     const navigate = useNavigate();
 
 
+    // State for loading page on sign in / up
+    const [loading, setLoading] = useState(false);
 
     // Button handlers
     const handleSignupWithEmail = () => {
@@ -38,6 +41,7 @@ export const SignupOptions = ({ setFormSelector, fetchMyInfo }) => {
     }
 
     const handleCreateDemoAccount = async () => {
+        setLoading(true)
         try {
             const token = localStorage.getItem('accessToken');
             const response = await fetch(`${backendUrl}/users/demouser`, {
@@ -48,13 +52,10 @@ export const SignupOptions = ({ setFormSelector, fetchMyInfo }) => {
                 },
             });
             const userData = await response.json();
-            
+
             if (!response.ok) {
                 console.log(userData.msg); // Log the error message from the server
             } else {
-                console.log(userData.email);
-                console.log(userData.password);
-                
                 try {
                     const loginResponse = await fetch(`${backendUrl}/auth/login`, {
                         method: 'POST',
@@ -66,12 +67,14 @@ export const SignupOptions = ({ setFormSelector, fetchMyInfo }) => {
                             password: userData.password
                         })
                     });
-                    
+
                     const loginData = await loginResponse.json();
-                    
+
                     if (!loginResponse.ok) {
+                        setLoading(false)
                         console.log("Error logging into demo account");
                     } else {
+                        setLoading(false)
                         localStorage.setItem('accessToken', loginData.accessToken);
                         fetchMyInfo(); // Assuming this function fetches additional user info
                         navigate("/home"); // Redirect to home page after successful login
@@ -87,77 +90,86 @@ export const SignupOptions = ({ setFormSelector, fetchMyInfo }) => {
         }
     };
 
+
+
     return (
-        <div className="SignupOptions">
+        <>
+            {loading ? (
+                <div className="loading-animation"></div>
+            ) : (
+                <div className="SignupOptions">
+                    <h3
+                        style={{
+                            color: "var(--primary-fill)"
+                        }}>Sign up</h3>
+                    <button
+                        onClick={handleSignupWithEmail}>
+                        <img
+                            src='/At-logo.png'
+                            alt='Email'
+                        ></img>
+                        Sign up with Email
+                        <div></div>
+                    </button>
 
+                    <button
+                        onClick={handleSignupWithMeta}>
+                        <img
+                            src='/Meta-logo.png'
+                            alt='Meta'
+                        ></img>
+                        Sign up with Meta
+                        <div></div>
+                    </button>
 
-            <h3>Sign up</h3>
-            <button
-                onClick={handleSignupWithEmail}>
-                <img
-                    src='/At-logo.png'
-                    alt='Email'
-                ></img>
-                Sign up with Email
-                <div></div>
-            </button>
+                    <button
+                        onClick={handleSignupWithApple}>
+                        <img
+                            src='/Apple-logo.png'
+                            alt='Apple'
+                        ></img>
+                        Sign up with Apple
+                        <div></div>
+                    </button>
 
-            <button
-                onClick={handleSignupWithMeta}>
-                <img
-                    src='/Meta-logo.png'
-                    alt='Meta'
-                ></img>
-                Sign up with Meta
-                <div></div>
-            </button>
+                    <button
+                        onClick={handleSignupWithGoogle}>
+                        <img
+                            src='/Google-logo.png'
+                            alt='Google'
+                        ></img>
+                        Sign up with Google
+                        <div></div>
+                    </button>
 
-            <button
-                onClick={handleSignupWithApple}>
-                <img
-                    src='/Apple-logo.png'
-                    alt='Apple'
-                ></img>
-                Sign up with Apple
-                <div></div>
-            </button>
+                    <button
+                        onClick={handleSignupWithX}>
+                        <img
+                            src='/X-logo.png'
+                            alt='X'
+                        ></img>
+                        Sign up with X
+                        <div></div>
+                    </button>
+                    or
+                    <button
+                        className="Main"
+                        onClick={handleLoginButton}>
+                        <div></div>
+                        Log in
+                        <div></div>
+                    </button>
 
-            <button
-                onClick={handleSignupWithGoogle}>
-                <img
-                    src='/Google-logo.png'
-                    alt='Google'
-                ></img>
-                Sign up with Google
-                <div></div>
-            </button>
+                    <button
+                        className="Main-demo"
+                        onClick={handleCreateDemoAccount}>
+                        <div></div>
+                        Demo Account
+                        <div></div>
+                    </button>
 
-            <button
-                onClick={handleSignupWithX}>
-                <img
-                    src='/X-logo.png'
-                    alt='X'
-                ></img>
-                Sign up with X
-                <div></div>
-            </button>
-            or
-            <button
-                className="Main"
-                onClick={handleLoginButton}>
-                <div></div>
-                Log in
-                <div></div>
-            </button>
-
-            <button
-                className="Main"
-                onClick={handleCreateDemoAccount}>
-                <div></div>
-                Demo Account
-                <div></div>
-            </button>
-
-        </div>
-    )
+                </div>
+            )}
+        </>
+    );
 }

@@ -44,7 +44,6 @@ export const EventPage = ({ handleLogout }) => {
             } else {
                 setEventOBJ(data.event);
                 setPageLoading(false);
-                console.log(data.event)
             }
         } catch (error) {
             console.error('Error:', error.message);
@@ -183,6 +182,10 @@ export const EventPage = ({ handleLogout }) => {
                         </div>
                     </div>
                     <div className="Privacy-preference">{eventOBJ.PUBLIC_DATA.EVENT_PRIVACY_PREFERENCE}</div>
+                </div>
+
+                <div className="Event-host">
+                Hosted by {eventOBJ.PUBLIC_DATA.EVENT_ATTENDEE_LIST[0].PERSONAL_INFO.FIRST_NAME} {eventOBJ.PUBLIC_DATA.EVENT_ATTENDEE_LIST[0].PERSONAL_INFO.LAST_NAME}
                 </div>
 
                 <div className="Info-section">

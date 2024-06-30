@@ -40,7 +40,6 @@ export const Home = ({ handleLogout, userData }) => {
                 console.log(data.msg)
             } else {
                 setEvents(data.events)
-                console.log(data.events)
                 setPageLoading(false)
             }
         } catch (error) {
@@ -84,9 +83,8 @@ export const Home = ({ handleLogout, userData }) => {
         navigate("/myprofile")
     }
     // OPEN EVENT 
-    const openEvent = (id) => { 
-        console.log("opening event: " + id);
-        navigate('/event/'+id);
+    const openEvent = (id) => {
+        navigate('/event/' + id);
     }
 
 
@@ -142,13 +140,13 @@ export const Home = ({ handleLogout, userData }) => {
                         {events.length > 0 ? (
                             events.map(event => (
                                 <div
-                                onClick={() => { openEvent(event._id)}}
+                                    onClick={() => { openEvent(event._id) }}
                                     key={event._id}
                                     className="Event">
                                     <div className="Event-background">
                                         <div className="Atendees-container">
                                             <div className="Avatar-container">
-                                            <img src={event.PUBLIC_DATA.ADMIN_AVATAR || "/Black-pp.jpg"} alt="Avatar" />
+                                                <img src={event.PUBLIC_DATA.ADMIN_AVATAR || "/Black-pp.jpg"} alt="Avatar" />
                                             </div>
                                             <div className="Atendee-count">
                                                 +{event.PUBLIC_DATA.EVENT_ATTENDEE_LIST.length}
@@ -157,14 +155,19 @@ export const Home = ({ handleLogout, userData }) => {
                                         <div className="IMG-container">
                                             <img src={event.PUBLIC_DATA.EVENT_IMG} alt="Event" />
                                         </div>
-                                        <div className="Title-container">
+                                        <div
+                                            className="Title-container">
                                             {event.PUBLIC_DATA.EVENT_TITLE}
                                         </div>
                                     </div>
                                 </div>
                             ))
                         ) : (
-                            <p>Nobody's hanging out right now - Try creating an event</p>
+                            <div
+                            className="Empty-homepage-message"
+                            >Nobody's hanging out right now 
+                            <br/>
+                             Try creating an event</div>
                         )}
                     </>
                 )}

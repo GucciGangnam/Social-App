@@ -12,7 +12,7 @@ export const SignupApple = ({ setFormSelector }) => {
 
     return (
         <div className="SignupApple">
-            Sign up with Apple
+            Sign up with Apple coming soon
 
             <button
                 onClick={handleBackButton}

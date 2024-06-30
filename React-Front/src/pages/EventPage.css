@@ -76,6 +76,11 @@
     color: var(--secondary-text);
 }
 
+.EventPage .Event-host{ 
+    font-size: 10px;
+    color: var(--secondary-text);
+}
+
 .EventPage .Info-section {
     /* outline: 1px solid green; */
 }

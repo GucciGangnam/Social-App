@@ -12,7 +12,7 @@ export const LoginGoogle = ({ setFormSelector }) => {
 
     return (
         <div className="LoginGoogle">
-            Log in with Google
+            Log in with Google coming soon
 
             <button
                 onClick={handleBackButton}

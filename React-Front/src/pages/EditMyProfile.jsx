@@ -18,7 +18,6 @@ export const EditMyProfile = ({ fetchMyInfo }) => {
 
     // Change handlers
     const handleFirstNameChange = (e) => {
-        console.log("hello")
         setUserData({
             ...userData,
             PERSONAL_INFO: {
@@ -211,10 +210,13 @@ export const EditMyProfile = ({ fetchMyInfo }) => {
             });
             const data = await response.json();
             if (!response.ok) {
-                console.log(data)
+                if(response.status === 999){ 
+                    alert("can't edit demo account info")
+                }
+                console.log(data.msg)
             } else {
                 fetchMyInfo();
-                console.log(data)
+                console.log(data.msg)
             }
         } catch (error) {
             console.error('Error:', error.message);

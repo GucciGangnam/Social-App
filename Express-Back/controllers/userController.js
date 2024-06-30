@@ -12,6 +12,8 @@ const jwt = require("jsonwebtoken");
 
 // SCHEMES
 const User = require("../models/user")
+const Event = require("../models/event");
+const event = require("../models/event");
 
 // CREATE
 exports.create_new_user = [
@@ -155,22 +157,27 @@ exports.create_new_user = [
 ];
 
 // CREATE DEMO USER 
-exports.create_demo_user = asyncHandler(async(req, res, next) => { 
+exports.create_demo_user = asyncHandler(async (req, res, next) => {
 
 
     const userID = "DEMOUSER" + uuidv4();
     const randomNumber = Math.floor(100000 + Math.random() * 900000).toString();
+    const randomPassword = uuidv4();
+
+
+
+    const hashedPassword = await bcrypt.hash(randomPassword, 10);
 
     // Create new user
     const newUser = new User({
         DEMO_USER: true,
         ID: userID,
         PERSONAL_INFO: {
-            USER_NAME: "Dome_user" + randomNumber,
+            USER_NAME: "Demo_user" + randomNumber,
             FIRST_NAME: "Demo",
             LAST_NAME: "User",
-            EMAIL: "demo_user"+randomNumber+"@email.com",
-            PASSWORD: uuidv4(),
+            EMAIL: "demo_user" + randomNumber + "@email.com",
+            PASSWORD: hashedPassword,
             SOCIAL_LINKS: [], // Assuming you have socialLinks in req.body
             BIO: "Hi, welcome to my profile",
             AVATAR: null
@@ -180,7 +187,14 @@ exports.create_demo_user = asyncHandler(async(req, res, next) => {
                 ALL_FRIENDS: [],
                 CLOSE_FRIENDS: []
             }],
-            CONTACTS: ["UID6064eb6a-6f20-4c1f-af7b-944e77b7d690", "UIDa7b738fc-d117-48f4-bec0-6d706deed570", "UID3207de9d-6f96-4961-859f-66d4f2180b9d", "UID3e17273f-449a-4bb7-ad62-e90c1d050f6", "UIDf87533c1-e3c2-4233-9899-cef175c3d693", "UIDdda2c9b0-1150-4c4b-90c0-b2e73a07d032", "UIDb71303e1-b1ff-42d3-a731-8ade8c6d1838", "UID391ea8d3-1560-4ca4-afb1-3d0c475b5384"]
+            CONTACTS: ["UID6064eb6a-6f20-4c1f-af7b-944e77b7d690", 
+                "UIDa7b738fc-d117-48f4-bec0-6d706deed570", 
+                "UID3207de9d-6f96-4961-859f-66d4f2180b9d", 
+                "UID3e17273f-449a-4bb7-ad62-e90c1d050f61", 
+                "UIDf87533c1-e3c2-4233-9899-cef175c3d693", 
+                "UIDdda2c9b0-1150-4c4b-90c0-b2e73a07d032", 
+                "UIDb71303e1-b1ff-42d3-a731-8ade8c6d1838", 
+                "UID391ea8d3-1560-4ca4-afb1-3d0c475b5384"]
         },
         META_DATA: {
             SIGNUP_DATE: new Date()
@@ -188,7 +202,47 @@ exports.create_demo_user = asyncHandler(async(req, res, next) => {
     });
     try {
         await newUser.save();
-        return res.status(201).json({ email: newUser.PERSONAL_INFO.EMAIL, password: newUser.PERSONAL_INFO.PASSWORD  });
+
+        const hostIDs = [
+            'UID6064eb6a-6f20-4c1f-af7b-944e77b7d690',
+            'UIDa7b738fc-d117-48f4-bec0-6d706deed570',
+            'UID3207de9d-6f96-4961-859f-66d4f2180b9d',
+            'UID3e17273f-449a-4bb7-ad62-e90c1d050f61',
+            'UIDf87533c1-e3c2-4233-9899-cef175c3d693',
+            'UIDdda2c9b0-1150-4c4b-90c0-b2e73a07d032',
+            'UIDb71303e1-b1ff-42d3-a731-8ade8c6d1838',
+            'UID391ea8d3-1560-4ca4-afb1-3d0c475b5384'
+        ];
+
+        for (const hostID of hostIDs) {
+            const host = await User.findOne({ ID: hostID });
+            if (host && host.MAIN_DATA) {
+                host.MAIN_DATA.CONTACTS.push(userID);
+                await host.save();
+            } else {
+                console.error(`Host not found or MAIN_DATA missing for ID: ${hostID}`);
+            }
+        }
+
+        const eventIDs = [
+            '667fb5c709de156c6286ca24',
+            '667fb96809de156c6286cbea',
+            '667fbee709de156c6286cd36',
+            '667fc37609de156c6286ce18',
+            '667fc9a409de156c6286cf47'
+        ];
+
+        for (const eventID of eventIDs) {
+            const event = await Event.findOne({ _id: eventID });
+            if (event && event.PUBLIC_DATA) {
+                event.PUBLIC_DATA.EVENT_INVITEE_LIST.push(userID);
+                await event.save();
+            } else {
+                console.error(`Event not found or PUBLIC_DATA missing for ID: ${eventID}`);
+            }
+        }
+
+        return res.status(201).json({ email: newUser.PERSONAL_INFO.EMAIL, password: randomPassword });
     } catch (error) {
         console.error("Failed to create new user:", error);
         return res.status(500).json({ errors: [{ msg: 'Failed to create new user' }] });
@@ -353,6 +407,11 @@ exports.update_user = [
             const userToUpdate = await User.findOne({ ID: req.userId })
             if (!userToUpdate) {
                 return res.status(404).json({ error: 'User not found' });
+            }
+
+            if(userToUpdate.DEMO_USER){ 
+                console.log("cant upodate demo user acc info")
+                return res.status(999).json({msg : "Cant update demo account"});
             }
             // Update user's FIRST_NAME in PERSONAL_INFO
             userToUpdate.PERSONAL_INFO.FIRST_NAME = req.body.firstName;

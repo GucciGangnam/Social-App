@@ -36,7 +36,10 @@ export const LoginOptions = ({setFormSelector}) => {
         <div className="SignupOptions">
             
 
-            <h3>Log in</h3>
+            <h3
+            style={{
+                color: "var(--primary-fill)"
+            }}>Log in</h3>
             <button
             onClick={handleLoginWithEmail}>
                 <img

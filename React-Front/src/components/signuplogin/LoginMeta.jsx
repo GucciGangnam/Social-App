@@ -12,7 +12,7 @@ export const LoginMeta = ({ setFormSelector }) => {
 
     return (
         <div className="LoginMeta">
-            Log in with Meta
+            Log in with Meta coming soon
 
             <button
                 onClick={handleBackButton}

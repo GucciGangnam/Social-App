@@ -29,9 +29,6 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
     const [startTime, setStartTime] = useState(new Date());
     const [location, setLocation] = useState(null)
 
-    useEffect(() => {
-        console.log(location);
-    }, [location])
 
 
     const [uploading, setUploading] = useState(false)
@@ -102,7 +99,7 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
             } else {
                 const data = await response.json();
                 setImgURL(data.secure_url)
-                console.log('Post request successful:', data.secure_url);
+                console.log('Post request successful:');
                 setUploading(false)
                 // Handle successful response (e.g., update state with uploaded image URL)
             }
@@ -137,8 +134,8 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
             const data = await response.json();
             if (!response.ok) {
                 console.log(data.msg)
+                alert("You must upload an image")
             } else {
-                // console.log(data.event._id)
                 setTitle('')
                 setInfo('')
                 setImg(null)
@@ -175,6 +172,7 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                     <input
                         placeholder="What you up to?"
                         value={title}
+                        maxLength={50}
                         onChange={(e) => { setTitle(e.target.value) }}
                         required />
                     <input
@@ -256,7 +254,7 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
 
                 <div className="Section">
                     <button
-                        onClick={() => { setIsPrivacyInfoShowing(true); }}
+                        onClick={(e) => { e.preventDefault(); setIsPrivacyInfoShowing(true); }}
                         className="Info-btn">i</button>
                 </div>
 

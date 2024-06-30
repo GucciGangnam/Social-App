@@ -48,9 +48,7 @@ function App() {
         localStorage.removeItem('accessToken');
       } else {
         setUserData(data)
-        console.log(data)
         localStorage.setItem('userData', JSON.stringify(data));
-        console.log("user data fetched sucesfully")
       }
     } catch (error) {
       console.error('Error:', error.message);
@@ -67,31 +65,6 @@ function App() {
   const [isCreateNewEventShowing, setIsCreateNewEventShowing] = useState(false)
   const [hideNav, setHideNav] = useState(false);
 
-  // async function fetchUserEvents() {
-  //     try {
-  //         const token = localStorage.getItem('accessToken');
-  //         const response = await fetch(`${backendUrl}/events`, {
-  //             method: 'GET',
-  //             headers: {
-  //                 'Content-Type': 'application/json',
-  //                 'Authorization': `Bearer ${token}`
-  //             },
-  //         });
-  //         const data = await response.json();
-  //         if (!response.ok) {
-  //             if (response.status === 403 || response.status === 401) {
-  //                 handleLogout();
-  //             }
-  //             console.log(data.msg)
-  //         } else {
-  //             setEvents(data.events)
-  //             setPageLoading(false)
-  //         }
-  //     } catch (error) {
-  //         console.error('Error:', error.message);
-  //         // Handle errors as needed
-  //     }
-  // }
 
 
 
@@ -120,7 +93,7 @@ function App() {
 
 
       <Routes>
-        <Route path="/login" element={<SignupLogin fetchMyInfo={fetchMyInfo} handleLogout={handleLogout} />} />
+        <Route path="/login" element={<SignupLogin fetchMyInfo={fetchMyInfo} handleLogout={handleLogout} setHideNav={setHideNav} />} />
         <Route path='/home' element={<Home userData={userData} fetchMyInfo={fetchMyInfo} handleLogout={handleLogout} />} />
         <Route path='/event/:id' element={<EventPage fetchMyInfo={fetchMyInfo} handleLogout={handleLogout} />} />
         <Route path='/myprofile' element={<MyProfile userData={userData} handleLogout={handleLogout} />} />

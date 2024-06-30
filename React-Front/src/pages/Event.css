@@ -182,11 +182,14 @@
     background-color: var(--secondary-fill);
     width: calc(100% - 20px);
     height: fit-content;
-    border-radius: 25px;
+    border-radius: 10px;
     padding: 10px;
-    color: var(--primary-text);
+    color: var(--secondary-text);
+    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 12px;
+    word-wrap: break-word; /* Prevents long words from overflowing */
+    overflow-wrap: break-word; /* Additional support for breaking long words */
 }

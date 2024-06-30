@@ -13,6 +13,8 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 export const LoginEmail = ({ setFormSelector, fetchMyInfo }) => {
 
     const navigate = useNavigate();
+    // State for loading page on sign in / up
+    const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState(
         {
@@ -39,7 +41,8 @@ export const LoginEmail = ({ setFormSelector, fetchMyInfo }) => {
     }
 
     const [isLoggingIn, setIsLoggingIn] = useState(false)
-    const handleLogin = async(e) => {
+    const handleLogin = async (e) => {
+        setLoading(true)
         e.preventDefault();
         setIsLoggingIn(true)
         // Make fetch
@@ -55,6 +58,7 @@ export const LoginEmail = ({ setFormSelector, fetchMyInfo }) => {
             const data = await response.json();
 
             if (!response.ok) {
+                setLoading(false)
                 setFormData({
                     ...formData,
                     password: ''
@@ -64,11 +68,12 @@ export const LoginEmail = ({ setFormSelector, fetchMyInfo }) => {
             }
 
             if (response.ok) {
+                setLoading(false)
                 localStorage.setItem('accessToken', data.accessToken);
                 fetchMyInfo();
                 setIsLoggingIn(false);
                 navigate("/home")
-                
+
             }
 
         } catch (error) {
@@ -82,45 +87,47 @@ export const LoginEmail = ({ setFormSelector, fetchMyInfo }) => {
     }
 
     return (
-        <div className="LoginEmail">
+        <>
+            {loading ? (
+                <div className="loading-animation"></div>
+            ) : (
+                <div className="LoginEmail">
+                    Log in with Email
+                    <form onSubmit={handleLogin}>
+                        <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            placeholder='Email'
+                            required
+                        />
+                        <input
+                            type="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            placeholder={passwordPH}
+                            required
+                        />
 
-            Log in with Email
+                        <button
+                            type="submit"
+                            className={isLoggingIn ? 'SignupBTN-loading' : 'SignupBTN'}>
+                            {isLoggingIn ? 'Loading' : 'Login'}
+                        </button>
 
-            <form onSubmit={handleLogin}>
-                <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder='Email'
-                    required
-                />
-                <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder={passwordPH}
-                    required
-                />
-
-                <button
-                    type="submit"
-                    className={isLoggingIn ? 'SignupBTN-loading' : 'SignupBTN'}>
-                    {isLoggingIn ? 'Loading' : 'Login'}
-                </button>
-
-            </form>
-
-            {!isLoggingIn && (
-                <button
-                    onClick={handleBackButton}
-                    className="BackBtn">
-                    Back
-                </button>
-            )}
-
-
-        </div>
+                    </form>
+                    {!isLoggingIn && (
+                        <button
+                            onClick={handleBackButton}
+                            className="BackBtn">
+                            Back
+                        </button>
+                    )}
+                </div>
+            )
+            }
+        </>
     )
 }

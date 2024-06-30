@@ -23,7 +23,6 @@ export const Chat = ({ handleLogout, setHideNav }) => {
     // Handle Go Back 
     const navigate = useNavigate();
     const handleGoBack = () => {
-        console.log("going backkkkk")
         navigate(-1);
     }
 
@@ -58,7 +57,6 @@ export const Chat = ({ handleLogout, setHideNav }) => {
             } else {
                 setEventOBJ(data.event);
                 setPageLoading(false);
-                console.log(data.event)
             }
         } catch (error) {
             console.error('Error:', error.message);
@@ -78,7 +76,6 @@ export const Chat = ({ handleLogout, setHideNav }) => {
         }
     };
     const sendMessage = async () => {
-        console.log('Message sent:', messageInput);
         // Run send message fetch
         try {
             const token = localStorage.getItem('accessToken');
@@ -99,7 +96,6 @@ export const Chat = ({ handleLogout, setHideNav }) => {
                 }
                 console.log("Message not sent")
             } else {
-                console.log("Message sent")
                 fetchSingleEvent();
             }
         } catch (error) {

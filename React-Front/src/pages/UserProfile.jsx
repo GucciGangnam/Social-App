@@ -42,10 +42,8 @@ export const UserProfile = ({ fetchMyInfo }) => {
             const data = await response.json();
             if (!response.ok) {
                 setUserNotFound(true)
-                console.log("User not found")
             } else {
                 setUser(data)
-                console.log(data.PERSONAL_INFO.USER_NAME)
             }
         } catch (error) {
             console.error('Error:', error.message);
@@ -55,10 +53,6 @@ export const UserProfile = ({ fetchMyInfo }) => {
         }
     }
 
-    // Function for adding freind
-    // const [addFriendState, setAddFriendState] = useState("Add Friend");
-    // console.log(myData)
-    // console.log(user)
 
 
     const handleAddFriend = async () => {
@@ -75,12 +69,9 @@ export const UserProfile = ({ fetchMyInfo }) => {
             });
             const data = await response.json();
             if (!response.ok) {
-                console.log("No good")
-                console.log(data)
+                console.log(data.msg)
             } else {
-                console.log("Yes good");
                 fetchMyInfo();
-                console.log(data);
             }
         } catch (error) {
             console.error('Error:', error.message);
@@ -102,12 +93,9 @@ export const UserProfile = ({ fetchMyInfo }) => {
             });
             const data = await response.json();
             if (!response.ok) {
-                console.log("No good")
-                console.log(data)
+                console.log(data.msg)
             } else {
-                console.log("Yes good");
                 fetchMyInfo();
-                console.log(data);
             }
         } catch (error) {
             console.error('Error:', error.message);
@@ -129,12 +117,9 @@ export const UserProfile = ({ fetchMyInfo }) => {
             });
             const data = await response.json();
             if (!response.ok) {
-                console.log("No good")
-                console.log(data)
+                console.log(data.msg)
             } else {
-                console.log("Yes good");
                 fetchMyInfo();
-                console.log(data);
             }
         } catch (error) {
             console.error('Error:', error.message);
@@ -144,7 +129,6 @@ export const UserProfile = ({ fetchMyInfo }) => {
 
     const handleDeclineFriendRequest = async() => { 
                 // make fetch to back end to update 
-                console.log(user.ID)
                 try {
                     const token = localStorage.getItem('accessToken');
                     const response = await fetch(`${backendUrl}/users/declineaddfriend`, {
@@ -157,12 +141,9 @@ export const UserProfile = ({ fetchMyInfo }) => {
                     });
                     const data = await response.json();
                     if (!response.ok) {
-                        console.log("No good")
-                        console.log(data)
+                        console.log(data.msg)
                     } else {
-                        console.log("Yes good");
                         fetchMyInfo();
-                        console.log(data);
                     }
                 } catch (error) {
                     console.error('Error:', error.message);

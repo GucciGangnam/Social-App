@@ -32,8 +32,8 @@ exports.create_new_event = asyncHandler(async (req, res, next) => {
         const invitees = admin.MAIN_DATA.CONTACTS;
 
         // Validate required fields
-        if (!eventTitle || !eventPrivacyPreference || !eventStartTime) {
-            console.log(eventTitle, eventPrivacyPreference, eventStartTime);
+        if (!eventTitle || !eventPrivacyPreference || !eventIMG || !eventStartTime) {
+            console.log(eventTitle, eventIMG, eventPrivacyPreference, eventStartTime);
             return res.status(400).json({ msg: 'All fields are required' });
         }
 
@@ -54,21 +54,6 @@ exports.create_new_event = asyncHandler(async (req, res, next) => {
 
         // Save the event to the database
         await newEvent.save();
-
-        // // Ensure HOSTING_EVENTS and ATTENDING are initialized
-        // if (!admin.MAIN_DATA.HOSTING_EVENTS) {
-        //     admin.MAIN_DATA.HOSTING_EVENTS = [];
-        // }
-        // if (!admin.MAIN_DATA.ATTENDING_EVENTS) {
-        //     admin.MAIN_DATA.ATTENDING_EVENTS = [];
-        // }
-
-        // // Add event ID to admin.MAIN_DATA.HOSTING_EVENTS
-        // admin.MAIN_DATA.HOSTING_EVENTS.push(newEvent._id);
-        // admin.MAIN_DATA.ATTENDING.push(newEvent._id);
-
-        // // Save the updated admin user data
-        // await admin.save();
 
         // Respond with the created event
         return res.status(201).json({ msg: 'Event created successfully', event: newEvent });
@@ -119,7 +104,6 @@ exports.get_all_events = asyncHandler(async (req, res, next) => {
             };
         }));
 
-        console.log(eventsWithAdminAvatar);
 
         return res.status(200).json({ events: eventsWithAdminAvatar });
     } catch (error) {

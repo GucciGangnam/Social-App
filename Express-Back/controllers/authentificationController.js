@@ -20,11 +20,13 @@ exports.login_user = asyncHandler(async(req, res, next) => {
 const existingUser = await User.findOne({ 'PERSONAL_INFO.EMAIL': req.body.email })
 if (!existingUser) {
     // Email not found
+    console.log("email not found")
     return res.status(400).json({ msg: "Email password combination don't match" });
 }
 // Compare passwords
 const passwordMatch = await bcrypt.compare(req.body.password, existingUser.PERSONAL_INFO.PASSWORD);
 if (!passwordMatch) {
+    console.log("Password not match")
     return res.status(400).json({ msg: "Email password combination don't match" });
 }
 // Create a payload 

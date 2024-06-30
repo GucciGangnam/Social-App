@@ -76,10 +76,9 @@ export const MyProfile = ({ handleLogout }) => {
                     ))}
                 </div>
 
-                <div className="Circles-container">
-                    {/* Circle components as in your original code */}
+                {/* <div className="Circles-container">
                     circles go here?
-                </div>
+                </div> */}
 
 
                 <div className="Edit-BTN-container">

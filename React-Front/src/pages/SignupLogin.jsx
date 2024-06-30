@@ -22,14 +22,27 @@ import { LoginX } from '../components/signuplogin/LoginX'
 
 
 // COMPONENTS //
-export const SignupLogin = ({fetchMyInfo}) => {
+export const SignupLogin = ({ fetchMyInfo, setHideNav }) => {
+
+    // HIDE NAV BAR HERE
+    useEffect(() => {
+        setHideNav(true);
+        return () => {
+            setHideNav(false);
+        }
+    }, [])
 
     // Form Selector
     const [formSelector, setFormSelector] = useState('SignupOptions')
 
     return (
         <div className='SignupLogin'>
-            <h1>Logo</h1>
+            <h1
+                style={{
+                    color: "var(--primary-fill)"
+                }}>
+                Happen</h1>
+
             {formSelector === 'SignupOptions' && <SignupOptions setFormSelector={setFormSelector} fetchMyInfo={fetchMyInfo} />}
             {formSelector === 'SignupEmail' && <SignupEmail setFormSelector={setFormSelector} />}
             {formSelector === 'SignupMeta' && <SignupMeta setFormSelector={setFormSelector} />}

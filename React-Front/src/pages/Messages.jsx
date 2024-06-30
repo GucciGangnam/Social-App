@@ -58,7 +58,6 @@ export const Messages = ({ handleLogout }) => {
                 console.log(data.msg)
             } else {
                 setEventsArray(data.events)
-                console.log(data.events)
             }
         } catch (error) {
             console.error('Error:', error.message);
@@ -72,7 +71,7 @@ export const Messages = ({ handleLogout }) => {
     return (
         <div className="Messages">
             <div className="Header">
-                Happen
+                Messages
                 <svg
                     width="30px"
                     height="30px"

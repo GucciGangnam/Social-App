@@ -115,6 +115,7 @@
     background-color: var(--secondary-fill);
     border: none;
     border-radius: 5px;
+    color: var(--primary-text);
 }
 
 

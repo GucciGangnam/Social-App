@@ -10,7 +10,7 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 // Components 
 
 // COMPOENNT 
-export const Friends = ({handleLogout}) => {
+export const Friends = ({ handleLogout }) => {
     const navigate = useNavigate();
     const userData = JSON.parse(localStorage.getItem('userData'));
 
@@ -61,7 +61,6 @@ export const Friends = ({handleLogout}) => {
             if (!response.ok) {
                 handleLogout();
             } else {
-                console.log("yes good")
                 setContactList(data);
             }
         } catch (error) {
@@ -71,7 +70,7 @@ export const Friends = ({handleLogout}) => {
     }
 
     const [contactRequestsList, setContactRequestsList] = useState([]);
-    const fetchContactRequestsDataByIDs = async() => { 
+    const fetchContactRequestsDataByIDs = async () => {
         try {
             const token = localStorage.getItem('accessToken');
             const response = await fetch(`${backendUrl}/users/profile/findbyids`, {
@@ -86,9 +85,8 @@ export const Friends = ({handleLogout}) => {
             });
             const data = await response.json();
             if (!response.ok) {
-                console.log("no good")
+                console.log(data.msg)
             } else {
-                console.log("yes good")
                 setContactRequestsList(data);
             }
         } catch (error) {
@@ -139,7 +137,6 @@ export const Friends = ({handleLogout}) => {
                     {searchResults.map((result, index) => (
                         <div
                             onClick={() => {
-                                console.log(result);
                                 const userId = result.replace('find user: ', ''); // Extract the user ID
                                 navigate(`/user/${userId}`);
                             }}

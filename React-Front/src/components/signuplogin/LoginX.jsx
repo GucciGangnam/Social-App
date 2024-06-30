@@ -12,7 +12,7 @@ export const LoginX = ({ setFormSelector }) => {
 
     return (
         <div className="LoginX">
-            Log in with X
+            Log in with X coming soon
 
             <button
                 onClick={handleBackButton}

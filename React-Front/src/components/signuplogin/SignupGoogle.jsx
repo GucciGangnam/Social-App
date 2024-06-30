@@ -12,7 +12,7 @@ export const SignupGoogle = ({ setFormSelector }) => {
 
     return (
         <div className="SignupGoogle">
-            Sign up with Google
+            Sign up with Google coming soon
 
             <button
                 onClick={handleBackButton}

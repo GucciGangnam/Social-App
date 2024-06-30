@@ -24,7 +24,15 @@
     opacity: 1;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     font-size: 30px;
+}
 
+.Home .Empty-homepage-message{ 
+    background-color: var(--primary-fill);
+    padding: 10px;
+    margin: 10px;
+    color: var(--background);
+    text-align: center;
+    width: 100%;
 }
 
 .Home .Header-hidden {
