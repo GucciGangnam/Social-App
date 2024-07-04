@@ -44,8 +44,10 @@ export const Friends = ({ handleLogout }) => {
 
     // Fetch friend names by id and display 
     const [contactList, setContactList] = useState([]);
+    const [loadingFriends, setLoadingFriends] = useState(false)
     const fetchContactDataByIDs = async () => {
         try {
+            setLoadingFriends(true)
             const token = localStorage.getItem('accessToken');
             const response = await fetch(`${backendUrl}/users/profile/findbyids`, {
                 method: 'POST',
@@ -59,8 +61,10 @@ export const Friends = ({ handleLogout }) => {
             });
             const data = await response.json();
             if (!response.ok) {
+                setLoadingFriends(false)
                 handleLogout();
             } else {
+                setLoadingFriends(false)
                 setContactList(data);
             }
         } catch (error) {
@@ -150,37 +154,60 @@ export const Friends = ({ handleLogout }) => {
             </div>
 
 
-
-            <div className="Friend-container">
-                {contactRequestsList.map((contact) => (
-                    <div key={contact.ID}>
-                        <div
-                            onClick={() => { navigate(`/user/${contact.USER_NAME}`) }}
-                            className="Contact">
-                            <div>{contact.FIRST_NAME} {contact.LAST_NAME}</div>
-                            {/* Add more details as needed */}
-                        </div>
+            {loadingFriends ? (
+                <div className="Friend-container">
+                    <div className="Contact-loading">
+                        <div>Loading...</div>
                     </div>
-                ))}
-            </div>
+                </div>
+            ) : (
+                <div className="Friend-container">
+                    {contactRequestsList.map((contact) => (
+                        <div key={contact.ID}>
+                            <div
+                                onClick={() => { navigate(`/user/${contact.USER_NAME}`) }}
+                                className="Contact">
+                                <div>{contact.FIRST_NAME} {contact.LAST_NAME}</div>
+                                {/* Add more details as needed */}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
 
 
             <div className="Section-seperator">
                 Contact
             </div>
 
-            <div className="Friend-container">
-                {contactList.map((contact) => (
-                    <div key={contact.ID}>
-                        <div
-                            onClick={() => { navigate(`/user/${contact.USER_NAME}`) }}
-                            className="Contact">
-                            <div>{contact.FIRST_NAME} {contact.LAST_NAME}</div>
-                            {/* Add more details as needed */}
-                        </div>
+            {loadingFriends ? (
+                <div className="Friend-container">
+                    <div className="Contact-loading">
+                        <div>Loading...</div>
                     </div>
-                ))}
-            </div>
+                </div>
+            ) : (
+                <div className="Friend-container">
+                    {contactList.map((contact) => (
+                        <div key={contact.ID}>
+                            <div
+                                onClick={() => navigate(`/user/${contact.USER_NAME}`)}
+                                className="Contact"
+                            >
+                                <div>{contact.FIRST_NAME} {contact.LAST_NAME}</div>
+                                {/* Add more details as needed */}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+
+
+
+
+
+
 
 
 

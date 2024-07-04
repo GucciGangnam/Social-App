@@ -21,7 +21,8 @@
     background-color: var(--background);
     z-index: 12;
     transition: height 300ms ease, opacity 300ms ease;
-    height: 60px;
+    min-height: 60px;
+    max-height: fit-content;
     opacity: 1;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     font-size: 30px;

@@ -145,7 +145,7 @@ export const Messages = ({ handleLogout }) => {
 
             <div className="Convo-container">
 
-                <div className="Solo-Convo">
+                {/* <div className="Solo-Convo">
 
                     <svg
                         className="Circle-SVG"
@@ -164,7 +164,7 @@ export const Messages = ({ handleLogout }) => {
                     Name
                     <div className="Notification">
                     </div>
-                </div>
+                </div> */}
 
 
             </div>

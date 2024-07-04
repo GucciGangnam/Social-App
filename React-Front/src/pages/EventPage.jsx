@@ -151,7 +151,50 @@ export const EventPage = ({ handleLogout }) => {
     {
         if (pageLoading) {
             return (
-                <div>Loading</div>
+                <div className="EventPage-loading">
+
+                <div className="Header">Kiko</div>
+                <div className="Title-section"></div>
+                <div className="IMG-section">
+                    <img
+                        className="Event-img"/>
+                </div>
+                <div className="Meta-section">
+                    <div className="Attendees">
+                        <div
+                            
+                            className="Attendee-avatars-container">
+                            
+                                <img
+                                    className="Attendee-avatar"
+                                    src='/Black-pp.jpg'
+                                />
+                        </div>
+                    </div>
+                    <div className="Privacy-preference">Loading</div>
+                </div>
+
+                <div className="Event-host">
+                Hosted by Loading
+                </div>
+
+                <div className="Info-section">
+                    <strong>Info</strong>
+                    <div className="Info">
+                    Loading
+                    </div>
+                </div>
+
+
+                <div className="Button-section">
+                    
+                </div>
+
+                <div className="Bottom-margin">
+                </div>
+
+
+            </div>
             )
         }
     }

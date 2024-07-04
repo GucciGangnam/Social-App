@@ -104,7 +104,8 @@
     gap: 10px;
 }
 .Friends .Contact{ 
-    background-color: var(--element-background);
+    background-color: var(--secondary-fill);
+    color: var(--secondary-text);
     padding: 10px;
     border-radius: 10px;
     display: flex;
@@ -112,6 +113,7 @@
     align-items: center;
     position: relative;
 }
+
 .Friends .Circle-SVG{ 
 
     width: 15px;
@@ -123,4 +125,18 @@
     top: 10px;
     color: white;
     text-align: center;
+}
+
+/* /////// LOADING LOADING LOADING ///////// */
+
+.Friends .Contact-loading{ 
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    animation: title-loading 1.3s infinite;
+    background: linear-gradient(90deg, var(--secondary-fill) 25%, var(--primary-fill) 50%, var(--secondary-fill) 75%);
+    background-size: 200% 100%;
 }

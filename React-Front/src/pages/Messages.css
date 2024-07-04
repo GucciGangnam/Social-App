@@ -114,7 +114,8 @@
 
 /* GROUP CONVO DIV  */
 .Messages .Group-Convo {
-    background-color: var(--element-background);
+    background-color: var(--secondary-fill);
+    color: var(--secondary-text);
     padding: 10px;
     border-radius: 10px;
     text-align: center;
@@ -136,20 +137,14 @@
 
 /* SOLO CONVOS */
 .Messages .Solo-Convo {
-    background-color: var(--element-background);
+    background-color: var(--secondary-fill);
+    color: var(--secondary-text);
     padding: 10px;
     border-radius: 10px;
     text-align: center;
     position: relative;
 }
 
-.Messages .Solo-Convo {
-    background-color: var(--element-background);
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    position: relative;
-}
 
 .Messages .Solo-Convo svg {
 

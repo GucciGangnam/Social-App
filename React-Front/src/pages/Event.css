@@ -41,7 +41,7 @@
         background-color: var(--secondary-fill);
     }
     50% {
-        background-color: var(--primary-fill);
+        background-color: var(--background);
     }
     100% {
         background-color: var(--secondary-fill);
@@ -54,7 +54,7 @@
     border-radius: 10px;
     overflow: hidden;
     background-color: var(--primary-fill);
-    animation: img-loading 2s infinite;
+    animation: img-loading 1.5s infinite;
 }
 
 @keyframes img-loading {
@@ -83,7 +83,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: title-loading 2s infinite;
+    animation: title-loading 1s infinite;
 }
 
 @keyframes title-loading {
