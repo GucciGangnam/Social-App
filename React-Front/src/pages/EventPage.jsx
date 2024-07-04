@@ -160,7 +160,7 @@ export const EventPage = ({ handleLogout }) => {
         return (
             <div className="EventPage">
 
-                <div className="Header">Happen</div>
+                <div className="Header">Kiko</div>
                 <div className="Title-section">{eventOBJ.PUBLIC_DATA.EVENT_TITLE}</div>
                 <div className="IMG-section">
                     <img

@@ -41,7 +41,7 @@ export const SignupLogin = ({ fetchMyInfo, setHideNav }) => {
                 style={{
                     color: "var(--primary-fill)"
                 }}>
-                Happen</h1>
+                Kiko</h1>
 
             {formSelector === 'SignupOptions' && <SignupOptions setFormSelector={setFormSelector} fetchMyInfo={fetchMyInfo} />}
             {formSelector === 'SignupEmail' && <SignupEmail setFormSelector={setFormSelector} />}

@@ -166,7 +166,7 @@ export const NavigationBar = ({ isCreateNewEventShowing, setIsCreateNewEventShow
                 className="content-container">
 
                 <div className="Header">
-                    Happen
+                Kiko
                 </div>
                 <div className="Section">
                     <input

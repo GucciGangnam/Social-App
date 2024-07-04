@@ -94,7 +94,7 @@ export const Home = ({ handleLogout, userData }) => {
             <div className={isScrollingDown ? "Header-hidden" : "Header"}>
 
                 <div className="Logo-container">
-                    Happen
+                    Kiko
                 </div>
 
                 <div className="Profile-icon-container">
