@@ -144,14 +144,6 @@ export const Home = ({ handleLogout, userData }) => {
                                     key={event._id}
                                     className="Event">
                                     <div className="Event-background">
-                                        <div className="Atendees-container">
-                                            <div className="Avatar-container">
-                                                <img src={event.PUBLIC_DATA.ADMIN_AVATAR || "/Black-pp.jpg"} alt="Avatar" />
-                                            </div>
-                                            <div className="Atendee-count">
-                                                +{event.PUBLIC_DATA.EVENT_ATTENDEE_LIST.length}
-                                            </div>
-                                        </div>
                                         <div className="IMG-container">
                                             <img src={event.PUBLIC_DATA.EVENT_IMG} alt="Event" />
                                         </div>
@@ -159,15 +151,23 @@ export const Home = ({ handleLogout, userData }) => {
                                             className="Title-container">
                                             {event.PUBLIC_DATA.EVENT_TITLE}
                                         </div>
+                                        <div className="Atendees-container">
+                                            <div className="Avatar-container">
+                                                <img src={event.PUBLIC_DATA.ADMIN_AVATAR || "/Black-pp.jpg"} alt="Avatar" />
+                                            </div>
+                                            <div className="Atendee-count">
+                                                +{event.PUBLIC_DATA.EVENT_ATTENDEE_LIST.length} others
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             ))
                         ) : (
                             <div
-                            className="Empty-homepage-message"
-                            >Nobody's hanging out right now 
-                            <br/>
-                             Try creating an event</div>
+                                className="Empty-homepage-message"
+                            >Nobody's hanging out right now
+                                <br />
+                                Try creating an event</div>
                         )}
                     </>
                 )}

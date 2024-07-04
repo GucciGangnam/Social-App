@@ -69,7 +69,7 @@
 
 
 .Event .Title-container-loading {
-    outline: 1px solid var(--secondary-fill);
+    /* outline: 1px solid var(--secondary-fill); */
     background: linear-gradient(90deg, var(--secondary-fill) 25%, var(--primary-fill) 50%, var(--secondary-fill) 75%);
     background-size: 200% 100%;
     width: calc(100% - 20px);
@@ -115,25 +115,28 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    gap: 10px;
+    /* gap: 10px; */
     padding: 10px;
     position: relative;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Atendees */
 .Event .Atendees-container {
-    gap: 2px;
-    display: flex;
-    position: absolute;
-    top: 5px;
-    left: 5px;
+/* outline: 1px solid blue;; */
+width: 100%;
+display: flex;
+align-items: center;
+gap: 10px;
+font-size: 10px;
+color: var(--secondary-text);
 
 
 
 }
 
 .Event .Avatar-container {
+    outline: 2px solid rgb(255, 255, 255);;
     background-color: var(--secondary-fill);
     border-radius: 50%;
     display: flex;
@@ -151,13 +154,7 @@
 }
 
 .Event .Atendee-count {
-    background-color: var(--secondary-fill);
-    border-radius: 50%;
-    width: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 10px;
+
 
 }
 
@@ -178,18 +175,18 @@
 
 
 .Event .Title-container {
-    outline: 1px solid var(--secondary-fill);
-    background-color: var(--secondary-fill);
-    width: calc(100% - 20px);
+    /* outline: 1px solid var(--secondary-fill); */
+    background-color: none;
+    width: calc(100% - 10px);
     height: fit-content;
     border-radius: 10px;
-    padding: 10px;
-    color: var(--secondary-text);
-    text-align: center;
+    padding: 5px;
+    color: white;
+
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
-    font-size: 12px;
+    font-size: 16px;
     word-wrap: break-word; /* Prevents long words from overflowing */
     overflow-wrap: break-word; /* Additional support for breaking long words */
 }
