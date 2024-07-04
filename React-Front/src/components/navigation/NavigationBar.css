@@ -3,7 +3,6 @@
     bottom: 0px;
     width: 100vw;
     max-width: 800px;
-    height: 100%;
     background-color: var(--secondary-fill);
     z-index: 100;
     transition: 300ms ease-in-out;

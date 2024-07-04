@@ -15,6 +15,7 @@ import './App.css'
 
 
 // Pages
+import { LandingPage } from './pages/LandingPage';
 import { ErrorPage } from './pages/ErrorPage'
 import { SignupLogin } from './pages/SignupLogin'
 import { Home } from './pages/Home'
@@ -93,7 +94,7 @@ function App() {
 
 
       <Routes>
-
+        <Route path="/" element={<LandingPage setHideNav={setHideNav}/>}/>
         <Route path="/login" element={<SignupLogin fetchMyInfo={fetchMyInfo} handleLogout={handleLogout} setHideNav={setHideNav} />} />
         <Route path='/home' element={<Home userData={userData} fetchMyInfo={fetchMyInfo} handleLogout={handleLogout} />} />
         <Route path='/event/:id' element={<EventPage fetchMyInfo={fetchMyInfo} handleLogout={handleLogout} />} />

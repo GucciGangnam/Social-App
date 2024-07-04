@@ -203,7 +203,7 @@ color: var(--secondary-text);
 
 /* Sponsor sign */
 .Event .Sponsor-sign{ 
-    color: var(--secondary-fill);
+    color: var(--secondary-text);
     position: absolute;
     bottom: 5px;
     right: 5px;
