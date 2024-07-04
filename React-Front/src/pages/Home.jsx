@@ -137,6 +137,31 @@ export const Home = ({ handleLogout, userData }) => {
                     </>
                 ) : (
                     <>
+
+                        <div className="Event"
+                        onClick={() => { openEvent('66861fbd0d03015eb12ff783') }}>
+                            <div className="Event-background">
+                                <div className="IMG-container">
+                                    <img src='/OIG2.pX_WvzYHHNpV._e47yj8.jpeg' alt="Event" />
+                                </div>
+                                <div
+                                    className="Title-container">
+                                    Funny man at Comody Club - Tonight!
+                                </div>
+                                <div className="Atendees-container">
+                                    <div className="Avatar-container">
+                                        <img src='/OIG1.PtAN7DeM8RnoWulmbIMQ.jpeg' alt="Avatar" />
+                                    </div>
+                                    <div className="Atendee-count">
+                                        + many others
+                                    </div>
+                                    <div className="Sponsor-sign">
+                                        Sponsored
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         {events.length > 0 ? (
                             events.map(event => (
                                 <div
