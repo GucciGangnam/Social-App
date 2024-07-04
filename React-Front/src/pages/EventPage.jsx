@@ -48,6 +48,9 @@ export const EventPage = ({ handleLogout }) => {
         } catch (error) {
             console.error('Error:', error.message);
             // Handle errors as needed
+        } finally { 
+            setLoadingJoin(false);
+            setLoadingLeave(false);
         }
     }
 
@@ -75,9 +78,9 @@ export const EventPage = ({ handleLogout }) => {
                 navigate("/home")  // Log error message if response is not ok
             } else {
                 // If successful, fetch updated event data or perform other actions
-                setLoadingCancel(false);
                 navigate("/home")
                 console.log(data.msg);  // Log success message
+                setLoadingCancel(false);
             }
         } catch (error) {
             console.error('Error:', error.message);
@@ -109,7 +112,6 @@ export const EventPage = ({ handleLogout }) => {
                 navigate("/home")  // Log error message if response is not ok
             } else {
                 // If successful, fetch updated event data or perform other actions
-                setLoadingJoin(false);
                 fetchSingleEvent();
                 console.log(data.msg);  // Log success message
             }
@@ -143,7 +145,7 @@ export const EventPage = ({ handleLogout }) => {
                 navigate("/home")
             } else {
                 // If successful, fetch updated event data or perform other actions
-                setLoadingLeave(false);
+                
                 fetchSingleEvent();
                 console.log(data.msg);  // Log success message
             }
