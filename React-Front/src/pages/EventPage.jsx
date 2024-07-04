@@ -51,8 +51,10 @@ export const EventPage = ({ handleLogout }) => {
         }
     }
 
+    const [loadingCancel, setLoadingCancel] = useState(false)
     const handleCancelEvent = async () => {
         try {
+            setLoadingCancel(true)
             const token = localStorage.getItem('accessToken');
             const response = await fetch(`${backendUrl}/events/cancel/event`, {
                 method: 'DELETE',
@@ -68,10 +70,12 @@ export const EventPage = ({ handleLogout }) => {
             const data = await response.json();
 
             if (!response.ok) {
+                setLoadingCancel(false);
                 console.log(data.msg);
                 navigate("/home")  // Log error message if response is not ok
             } else {
                 // If successful, fetch updated event data or perform other actions
+                setLoadingCancel(false);
                 navigate("/home")
                 console.log(data.msg);  // Log success message
             }
@@ -81,8 +85,10 @@ export const EventPage = ({ handleLogout }) => {
         }
     };
 
+    const [loadingJoin, setLoadingJoin] = useState(false)
     const handleRequestToJoinEvent = async () => {
         try {
+            setLoadingJoin(true);
             const token = localStorage.getItem('accessToken');
             const response = await fetch(`${backendUrl}/events/join/event`, {
                 method: 'PUT',
@@ -98,10 +104,12 @@ export const EventPage = ({ handleLogout }) => {
             const data = await response.json();
 
             if (!response.ok) {
+                setLoadingJoin(false);
                 console.log(data.msg);
                 navigate("/home")  // Log error message if response is not ok
             } else {
                 // If successful, fetch updated event data or perform other actions
+                setLoadingJoin(false);
                 fetchSingleEvent();
                 console.log(data.msg);  // Log success message
             }
@@ -111,8 +119,10 @@ export const EventPage = ({ handleLogout }) => {
         }
     }
 
+    const [loadingLeave, setLoadingLeave] = useState(false)
     const handleLeaveEvent = async () => {
         try {
+            setLoadingLeave(true)
             const token = localStorage.getItem('accessToken');
             const response = await fetch(`${backendUrl}/events/leave/event`, {
                 method: 'PUT',
@@ -128,10 +138,12 @@ export const EventPage = ({ handleLogout }) => {
             const data = await response.json();
 
             if (!response.ok) {
+                setLoadingLeave(false);
                 console.log(data.msg);  // Log error message if response is not ok
                 navigate("/home")
             } else {
                 // If successful, fetch updated event data or perform other actions
+                setLoadingLeave(false);
                 fetchSingleEvent();
                 console.log(data.msg);  // Log success message
             }
@@ -153,48 +165,48 @@ export const EventPage = ({ handleLogout }) => {
             return (
                 <div className="EventPage-loading">
 
-                <div className="Header">Kiko</div>
-                <div className="Title-section"></div>
-                <div className="IMG-section">
-                    <img
-                        className="Event-img"/>
-                </div>
-                <div className="Meta-section">
-                    <div className="Attendees">
-                        <div
-                            
-                            className="Attendee-avatars-container">
-                            
+                    <div className="Header">Kiko</div>
+                    <div className="Title-section"></div>
+                    <div className="IMG-section">
+                        <img
+                            className="Event-img" />
+                    </div>
+                    <div className="Meta-section">
+                        <div className="Attendees">
+                            <div
+
+                                className="Attendee-avatars-container">
+
                                 <img
                                     className="Attendee-avatar"
                                     src='/Black-pp.jpg'
                                 />
+                            </div>
+                        </div>
+                        <div className="Privacy-preference">Loading</div>
+                    </div>
+
+                    <div className="Event-host">
+                        Hosted by Loading
+                    </div>
+
+                    <div className="Info-section">
+                        <strong>Info</strong>
+                        <div className="Info">
+                            Loading
                         </div>
                     </div>
-                    <div className="Privacy-preference">Loading</div>
-                </div>
 
-                <div className="Event-host">
-                Hosted by Loading
-                </div>
 
-                <div className="Info-section">
-                    <strong>Info</strong>
-                    <div className="Info">
-                    Loading
+                    <div className="Button-section">
+
                     </div>
+
+                    <div className="Bottom-margin">
+                    </div>
+
+
                 </div>
-
-
-                <div className="Button-section">
-                    
-                </div>
-
-                <div className="Bottom-margin">
-                </div>
-
-
-            </div>
             )
         }
     }
@@ -228,7 +240,7 @@ export const EventPage = ({ handleLogout }) => {
                 </div>
 
                 <div className="Event-host">
-                Hosted by {eventOBJ.PUBLIC_DATA.EVENT_ATTENDEE_LIST[0].PERSONAL_INFO.FIRST_NAME} {eventOBJ.PUBLIC_DATA.EVENT_ATTENDEE_LIST[0].PERSONAL_INFO.LAST_NAME}
+                    Hosted by {eventOBJ.PUBLIC_DATA.EVENT_ATTENDEE_LIST[0].PERSONAL_INFO.FIRST_NAME} {eventOBJ.PUBLIC_DATA.EVENT_ATTENDEE_LIST[0].PERSONAL_INFO.LAST_NAME}
                 </div>
 
                 <div className="Info-section">
@@ -246,9 +258,16 @@ export const EventPage = ({ handleLogout }) => {
                                 display: "flex",
                                 gap: "10px"
                             }}>
-                            <button onClick={handleCancelEvent}>Cancel event</button>
-                            <button onClick={() => { navigate(`/messages/${id}`)}}>Chat</button>
-                            {/* <button onClick={handleEditEvent}>Chat</button> */}
+                            {!loadingCancel ?
+                                <>
+                                    <button onClick={handleCancelEvent}>Cancel event</button>
+                                    <button onClick={() => { navigate(`/messages/${id}`) }}>Chat</button>
+                                </>
+                                :
+                                <button className="Button-loading">Canceling</button>
+                            }
+
+
                         </div>
                     ) : (
                         eventOBJ.PUBLIC_DATA.EVENT_ATTENDEE_LIST.some(attendee => attendee.ID === userData.ID) ? (
@@ -257,11 +276,20 @@ export const EventPage = ({ handleLogout }) => {
                                     display: "flex",
                                     gap: "10px"
                                 }}>
-                                <button onClick={handleLeaveEvent}>Leave</button>
-                                <button onClick={() => { navigate(`/messages/${id}`)}}>Chat</button>
+                                {!loadingLeave ?
+                                    <>
+                                        <button onClick={handleLeaveEvent}>Leave</button>
+                                        <button onClick={() => { navigate(`/messages/${id}`) }}>Chat</button>
+                                    </>
+                                    :
+                                    <button className="Button-loading">Leaving</button>
+                                }
                             </div>
                         ) : (
-                            <button onClick={handleRequestToJoinEvent}>Join</button>
+                            !loadingJoin ?
+                                <button onClick={handleRequestToJoinEvent}>Join</button>
+                                :
+                                <button className="Button-loading">Joining</button>
                         )
                     )}
                 </div>

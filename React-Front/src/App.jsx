@@ -93,6 +93,7 @@ function App() {
 
 
       <Routes>
+
         <Route path="/login" element={<SignupLogin fetchMyInfo={fetchMyInfo} handleLogout={handleLogout} setHideNav={setHideNav} />} />
         <Route path='/home' element={<Home userData={userData} fetchMyInfo={fetchMyInfo} handleLogout={handleLogout} />} />
         <Route path='/event/:id' element={<EventPage fetchMyInfo={fetchMyInfo} handleLogout={handleLogout} />} />
