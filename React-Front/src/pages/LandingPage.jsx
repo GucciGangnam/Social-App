@@ -22,7 +22,7 @@ const navigate = useNavigate();
         <div className="LandingPage">
             Welcome to <strong>Kiko</strong>
             <button
-            onClick={() => { navigate("/home")}}>Enter</button>
+            onClick={() => { navigate("/login")}}>Enter</button>
             <br/>
             <br/>
             <button className="terms">View Terms</button>
