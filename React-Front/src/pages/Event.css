@@ -109,7 +109,8 @@
 
 
 .Event .Event-background {
-    background-color: var(--primary-fill);
+    /* background-color: var(--primary-fill); */
+
     width: 100%;
     max-width: 230px;
     aspect-ratio: 3/4;
@@ -122,6 +123,8 @@
     padding: 10px;
     position: relative;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to bottom, var(--primary-fill) 80%, rgba(255, 255, 255, 0));
+
 }
 
 /* Atendees */

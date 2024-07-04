@@ -54,10 +54,11 @@ export const UserProfile = ({ fetchMyInfo }) => {
     }
 
 
-
+    const [loadingAdd, setLoadingAdd] = useState(false);
     const handleAddFriend = async () => {
         // make fetch to back end to update 
         try {
+            setLoadingAdd(true)
             const token = localStorage.getItem('accessToken');
             const response = await fetch(`${backendUrl}/users/addfriend`, {
                 method: 'PUT',
@@ -71,7 +72,8 @@ export const UserProfile = ({ fetchMyInfo }) => {
             if (!response.ok) {
                 console.log(data.msg)
             } else {
-                fetchMyInfo();
+                await fetchMyInfo();
+                setLoadingAdd(false)
             }
         } catch (error) {
             console.error('Error:', error.message);
@@ -79,9 +81,11 @@ export const UserProfile = ({ fetchMyInfo }) => {
         }
     }
 
+    const [loadingCancel, setLoadingCancel] = useState(false)
     const handleCancelAddFriend = async () => {
         // make fetch to back end to update 
         try {
+            setLoadingCancel(true)
             const token = localStorage.getItem('accessToken');
             const response = await fetch(`${backendUrl}/users/canceladdfriend`, {
                 method: 'PUT',
@@ -95,7 +99,8 @@ export const UserProfile = ({ fetchMyInfo }) => {
             if (!response.ok) {
                 console.log(data.msg)
             } else {
-                fetchMyInfo();
+                await fetchMyInfo();
+                setLoadingCancel(false);
             }
         } catch (error) {
             console.error('Error:', error.message);
@@ -106,6 +111,7 @@ export const UserProfile = ({ fetchMyInfo }) => {
     const handleAcceptFriendRequest = async () => {
         // make fetch to back end to update 
         try {
+            setLoadingCancel(true)
             const token = localStorage.getItem('accessToken');
             const response = await fetch(`${backendUrl}/users/acceptaddfriend`, {
                 method: 'PUT',
@@ -329,17 +335,23 @@ export const UserProfile = ({ fetchMyInfo }) => {
 
                             ) : (
                                 myData.MAIN_DATA.FRIEND_REQUESTS_OUT.includes(user.ID) ? (
+                                    !loadingCancel ? 
                                     <button
                                         style={{
                                             background: "var(--element-background)"
                                         }}
                                         onClick={handleCancelAddFriend}>Cancel Request</button>
+                                        :
+                                        <button className="Button-loading">Cancelling</button>
                                 ) : (
+                                    !loadingAdd ? 
                                     <button
                                         style={{
                                             background: "var(--primary-fill)"
                                         }}
                                         onClick={handleAddFriend}>Add Friend</button>
+                                        :
+                                        <button className="Button-loading">Adding</button>
                                 )
                             )
                         )
