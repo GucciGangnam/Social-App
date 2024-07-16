@@ -21,11 +21,14 @@ const navigate = useNavigate();
     return ( 
         <div className="LandingPage">
             Welcome to <strong>Kiko</strong>
+            <div
+            style={{
+                fontSize: "18px"
+            }}>The home of going out</div>
             <button
             onClick={() => { navigate("/login")}}>Enter</button>
             <br/>
             <br/>
-            <button className="terms">View Terms</button>
         </div>
     )
 }
